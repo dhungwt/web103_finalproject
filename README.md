@@ -2,7 +2,7 @@
 
 CodePath WEB103 Final Project
 
-Designed and developed by: [your names here]
+Designed and developed by: [ Diana Hung, Don Destin Iriho, Sayyid Sannoh, Sarah To, Tyler Trinh]
 
 🔗 Link to deployed app:
 
