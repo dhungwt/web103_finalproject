@@ -8,15 +8,15 @@ This unit, be sure to complete all tasks listed below. To complete a task, place
 
 You will need to reference the GitHub Project Management guide in the course portal for more information about how to complete each of these steps.
 
-- [ ] In your repo, create a project board.
+- [X] In your repo, create a project board.
   - *Please be sure to share your project board with the grading team's GitHub **codepathreview**. This is separate from your repository's sharing settings.*
-- [ ] In your repo, create at least 5 issues from the features on your feature list.
+- [X] In your repo, create at least 5 issues from the features on your feature list.
   - List the title of each issue you created:
-    1.
-    2.
-    3.
-    4.
-    5.
+    1. [Backend] Set up database schema and seed data
+    2.[Backend] Create CRUD API routes for locations
+    3.[Backend] Create CRUD API routes for items
+    4. [Backend] Create GET routes for tags and location_tags
+    5.[Backend] Add POST route for location_tags
 - [ ] In your repo, update the status of issues in your project board.
 - [ ] In your repo, create a GitHub Milestone for each final project unit, corresponding to each of the 5 milestones in your `milestones/` directory.
   - List the name of each milestone you created:
