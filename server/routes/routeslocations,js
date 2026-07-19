@@ -13,9 +13,14 @@ import {
   updateItem,
   deleteItem,
 } from "../controllers/controlItems.js";
+import {
+  getAllTags,
+  getTagsByLocation,
+} from "../controllers/controlTags.js";
 
 const router = express.Router();
 
+router.get("/tags", getAllTags);
 router.get("/", getAllLocations);
 router.get("/:id", getLocationById);
 router.post("/", createLocation);
@@ -28,5 +33,9 @@ router.get("/:locationId/items/:itemId", getItemById);
 router.post("/:locationId/items", createItem);
 router.patch("/:locationId/items/:itemId", updateItem);
 router.delete("/:locationId/items/:itemId", deleteItem);
+
+//tag routes
+router.get("/:locationId/tags", getTagsByLocation);
+
 
 export default router;
