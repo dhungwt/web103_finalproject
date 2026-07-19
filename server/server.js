@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import locationsRoutes from "../routes/routeslocations.js";
+import locationsRoutes from "./routes/routeslocations.js";
 
 dotenv.config();
 
@@ -18,5 +18,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+  console.log(`Server listening on port http://localhost:${PORT}`);
 });
