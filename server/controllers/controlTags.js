@@ -53,3 +53,22 @@ export const addTagToLocation = async (req, res) => {
     res.status(500).json({ error: "Unable to add tag to location." });
   }
 };
+
+export const removeTagFromLocation = async (req, res) => {
+  const { locationId, tagId } = req.params;
+
+  try {
+    const result = await pool.query(
+      `DELETE FROM location_tags
+       WHERE location_id = $1 AND tag_id = $2 RETURNING *;`,
+      [locationId, tagId],
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Location does not have this tag." });
+    }
+    res.status(200).json({ message: "Tag removed from location." });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Unable to remove tag from location." });
+  }
+};

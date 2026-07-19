@@ -16,6 +16,7 @@ import {
 import {
   getTagsByLocation,
   addTagToLocation,
+  removeTagFromLocation,
 } from "../controllers/controlTags.js";
 
 const router = express.Router();
@@ -36,6 +37,7 @@ router.delete("/:locationId/items/:itemId", deleteItem);
 //tag routes
 router.get("/:locationId/tags", getTagsByLocation);
 router.post("/:locationId/tags", addTagToLocation);
+router.delete("/:locationId/tags/:tagId", removeTagFromLocation);
 
 
 export default router;

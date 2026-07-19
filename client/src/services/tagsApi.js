@@ -25,3 +25,6 @@ export const addTagToLocation = async (locationId, tagId) =>
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ tag_id: tagId }),
   });
+
+export const removeTagFromLocation = async (locationId, tagId) =>
+  request(`/locations/${locationId}/tags/${tagId}`, { method: "DELETE" });
