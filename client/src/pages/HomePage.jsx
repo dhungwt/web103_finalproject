@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getLocations } from "../services/locationsApi";
 import LocationCard from "../components/LocationCard";
+import "../css/HomePage.css";
 
 function HomePage() {
   const [locations, setLocations] = useState([]);

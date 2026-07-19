@@ -1,29 +1,4 @@
-
-#root {
-  text-align: left;
-  width: 100%;
-  border-inline: none;
-}
-
-.app {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0 24px 64px;
-  box-sizing: border-box;
-}
-
-.app-header {
-  padding: 24px 0;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 32px;
-}
-
-.app-logo {
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--text-h);
-  text-decoration: none;
-}
+/* HomePage + LocationCard */
 
 .page-heading h1 {
   font-size: 32px;
@@ -99,29 +74,4 @@
 .location-card__notes {
   font-size: 14px;
   line-height: 145%;
-}
-
-.badge {
-  flex-shrink: 0;
-  font-size: 12px;
-  padding: 3px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--code-bg);
-  white-space: nowrap;
-}
-
-.badge--visited {
-  color: var(--accent);
-  background: var(--accent-bg);
-  border-color: var(--accent-border);
-}
-
-.status {
-  padding: 40px 0;
-  font-size: 16px;
-}
-
-.status--error {
-  color: #d64545;
 }
