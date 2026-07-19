@@ -52,7 +52,7 @@ export const createItem = async (req, res) => {
 };
 
 export const updateItem = async (req, res) => {
-  const { itemId } = req.params;
+  const { itemId, locationId } = req.params;
   const fields = ["name", "category", "rating", "notes", "image_url"];
 
   const updates = [];
@@ -71,11 +71,11 @@ export const updateItem = async (req, res) => {
     return res.status(400).json({ error: "No fields provided to update." });
   }
 
-  values.push(itemId);
+  values.push(itemId, locationId);
 
   try {
     const result = await pool.query(
-      `UPDATE items SET ${updates.join(", ")} WHERE id = $${paramIndex} RETURNING *;`,
+      `UPDATE items SET ${updates.join(", ")} WHERE id = $${paramIndex} AND location_id = $${paramIndex + 1} RETURNING *;`,
       values,
     );
     if (result.rows.length === 0) {
