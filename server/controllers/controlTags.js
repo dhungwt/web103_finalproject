@@ -11,6 +11,28 @@ export const getAllTags = async (req, res) => {
   }
 };
 
+export const createTag = async (req, res) => {
+  const { name } = req.body;
+
+  if (!name || !name.trim()) {
+    return res.status(400).json({ error: "Name is required." });
+  }
+
+  try {
+    const result = await pool.query(
+      `INSERT INTO tags (name) VALUES ($1) RETURNING *;`,
+      [name.trim()],
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    if (err.code === "23505") {
+      return res.status(409).json({ error: "That tag already exists." });
+    }
+    console.error(err);
+    res.status(500).json({ error: "Unable to create tag." });
+  }
+};
+
 export const getTagsByLocation = async (req, res) => {
   const { locationId } = req.params;
   try {

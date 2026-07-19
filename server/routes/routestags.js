@@ -1,8 +1,9 @@
 import express from "express";
-import { getAllTags } from "../controllers/controlTags.js";
+import { getAllTags, createTag } from "../controllers/controlTags.js";
 
 const router = express.Router();
 
 router.get("/", getAllTags);
+router.post("/", createTag);
 
 export default router;

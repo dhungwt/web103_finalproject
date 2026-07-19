@@ -9,6 +9,13 @@ export const getTags = async () => {
   return request("/tags");
 };
 
+export const createTag = async (name) =>
+  request("/tags", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name }),
+  });
+
 export const getTagsByLocation = async (locationId) => {
   if (USE_MOCK_DATA) {
     const tagIds = mockLocationTags
