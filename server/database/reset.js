@@ -1,5 +1,5 @@
-import pool from "server/config/database.js";
-import { tags, locations, items, locationTags } from "server/database/seeddata.js";
+import pool from "../config/database.js";
+import { tags, locations, items, locationTags } from "../database/seeddata.js";
 
 const createTables = async () => {
   await pool.query(`DROP TABLE IF EXISTS location_tags;`);
@@ -12,8 +12,6 @@ const createTables = async () => {
       id SERIAL PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
       address VARCHAR(255),
-      latitude DECIMAL,
-      longitude DECIMAL,
       notes TEXT,
       image_url VARCHAR(500),
       visited BOOLEAN DEFAULT FALSE,
@@ -56,14 +54,12 @@ const seedTables = async () => {
   const locationIds = [];
   for (const loc of locations) {
     const result = await pool.query(
-      `INSERT INTO locations (name, address, latitude, longitude, notes, image_url, visited)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)
+      `INSERT INTO locations (name, address, notes, image_url, visited)
+       VALUES ($1, $2, $3, $4, $5)
        RETURNING id;`,
       [
         loc.name,
         loc.address,
-        loc.latitude,
-        loc.longitude,
         loc.notes,
         loc.image_url,
         loc.visited,
