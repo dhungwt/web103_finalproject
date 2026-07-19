@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import locationsRoutes from "./routes/routeslocations.js";
+import tagsRoutes from "./routes/routestags.js";
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/locations", locationsRoutes);
+app.use("/api/tags", tagsRoutes);
 
 app.get("/", (req, res) => {
   res.send("Slice of Life API is running.");
