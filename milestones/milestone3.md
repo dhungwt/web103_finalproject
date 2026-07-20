@@ -17,35 +17,88 @@ You will need to reference the GitHub Project Management guide in the course por
     3.[Backend] Create CRUD API routes for items
     4. [Backend] Create GET routes for tags and location_tags
     5.[Backend] Add POST route for location_tags
-- [ ] In your repo, update the status of issues in your project board.
-- [ ] In your repo, create a GitHub Milestone for each final project unit, corresponding to each of the 5 milestones in your `milestones/` directory.
+- [X] In your repo, update the status of issues in your project board.
+- [X] In your repo, create a GitHub Milestone for each final project unit, corresponding to each of the 5 milestones in your `milestones/` directory.
   - List the name of each milestone you created:
-    1.
-    2.
-    3.
+- Develop the concept for your app, write user stories, create a feature list, and set up a shared GitHub repo
+- Create wireframes for at least three of your app's pages, construct an entity relationship diagram, and prepare to pitch your idea
+- Pitch your idea, set up your GitHub repo with issues for your features, and begin development
   - [ ] Set the completion percentage of each milestone. The GitHub Milestone for this unit (Milestone 3 - Unit 7) should be 100% completed when you submit for full points.
-- [ ] In `readme.md`, check off the features you have completed in this unit by adding a ✅ emoji in front of the feature's name.
-  - [ ] Under each feature you have completed, include a GIF showing feature functionality.
-- [ ] In this documents, complete all five questions in the **Reflection** section below.
+- [X] In `readme.md`, check off the features you have completed in this unit by adding a ✅ emoji in front of the feature's name.
+  - [X] Under each feature you have completed, include a GIF showing feature functionality.
+- [X] In this documents, complete all five questions in the **Reflection** section below.
 
 ## Reflection
 
 ### 1. What went well during this unit?
 
-[👉🏾👉🏾👉🏾 your answer here]
+working in shifts for this week's project
 
 ### 2. What were some challenges your group faced in this unit?
 
-[👉🏾👉🏾👉🏾 your answer here]
+scheduling and planning 
 
 ### Did you finish all of your tasks in your sprint plan for this week? If you did not finish all of the planned tasks, how would you prioritize the remaining tasks on your list?
 
-[👉🏾👉🏾👉🏾 your answer here]
+yes
 
 ### Which features and user stories would you consider “at risk”? How will you change your plan if those items remain “at risk”?
 
-[👉🏾👉🏾👉🏾 your answer here]
+Maps implementation
 
 ### 5. What additional support will you need in upcoming units as you continue to work on your final project?
 
-[👉🏾👉🏾👉🏾 your answer here]
+keeping pod members accountable
+
+# Milestone 3 Progress Report
+
+## GitHub Project Setup
+Project board created: yes
+Project board shared with codepathreview: yes
+
+## Issues Created
+List the title of each issue you created, one per line:
+[Backend] Set up database schema and seed data
+Create the locations, items, tags, and location_tags tables in reset.js and seed with sample bakery data.
+[Backend] Create CRUD API routes for locations
+Set up GET, POST, PATCH, and DELETE routes and controller functions for the locations table.
+[Backend] Create CRUD API routes for items
+Set up GET, POST, PATCH, and DELETE routes and controller functions for the items table, filtering by location_id.
+[Backend] Create GET routes for tags and location_tags
+Set up routes to get all tags and get all tags for a specific location.
+[Backend] Add POST route for location_tags
+Allow tags to be assigned to a location via the join table.
+
+## GitHub Milestones Created
+List the name of each GitHub Milestone you created, one per line:
+- Develop the concept for your app, write user stories, create a feature list, and set up a shared GitHub repo
+- Create wireframes for at least three of your app's pages, construct an entity relationship diagram, and prepare to pitch your idea
+- Pitch your idea, set up your GitHub repo with issues for your features, and begin development
+
+## Milestone 3 Completion
+Replace the blank before the percent sign with a number from 0 to 100.
+Completion percentage for Milestone 3 - Unit 7: 100%
+List each issue you completed this unit and the main file or folder where that work lives, one per line:
+[Backend] Set up database schema and seed data
+Create the locations, items, tags, and location_tags tables in reset.js and seed with sample bakery data.
+[Backend] Create CRUD API routes for locations
+Set up GET, POST, PATCH, and DELETE routes and controller functions for the locations table.
+[Backend] Create CRUD API routes for items
+Set up GET, POST, PATCH, and DELETE routes and controller functions for the items table, filtering by location_id.
+[Backend] Create GET routes for tags and location_tags
+Set up routes to get all tags and get all tags for a specific location.
+[Backend] Add POST route for location_tags
+Allow tags to be assigned to a location via the join table.
+
+## Features Completed This Unit
+List each feature you completed and checked off in readme.md this unit, one per line:
+[Backend] Set up database schema and seed data
+Create the locations, items, tags, and location_tags tables in reset.js and seed with sample bakery data.
+[Backend] Create CRUD API routes for locations
+Set up GET, POST, PATCH, and DELETE routes and controller functions for the locations table.
+[Backend] Create CRUD API routes for items
+Set up GET, POST, PATCH, and DELETE routes and controller functions for the items table, filtering by location_id.
+[Backend] Create GET routes for tags and location_tags
+Set up routes to get all tags and get all tags for a specific location.
+[Backend] Add POST route for location_tags
+Allow tags to be assigned to a location via the join table.
