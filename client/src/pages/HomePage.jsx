@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getLocations } from "../services/locationsApi";
 import LocationCard from "../components/LocationCard";
 import "../css/HomePage.css";
@@ -39,6 +40,7 @@ function HomePage() {
         <p>
           {locations.length} {locations.length === 1 ? "place" : "places"} saved
         </p>
+        <Link to="/locations/add">+ Add Location</Link>
       </div>
 
       {locations.length === 0 ? (
