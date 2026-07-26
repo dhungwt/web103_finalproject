@@ -1,0 +1,26 @@
+.location-header {
+    padding-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.location-header h1 {
+  font-size: 32px;
+  letter-spacing: -0.5px;
+  margin: 0 0 4px;
+}
+
+.location-header p {
+  font-size: 15px;
+  margin-bottom: 28px;
+}
+
+.location-name {
+    display: flex;
+    gap: 20px;
+}
+
+span {
+    padding-bottom: 10px;
+}
