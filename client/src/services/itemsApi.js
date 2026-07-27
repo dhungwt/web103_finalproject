@@ -1,26 +1,10 @@
-import { USE_MOCK_DATA, fakeDelay, request } from "./apiConfig";
-import { items as mockItems } from "../data/mockData";
+import { request } from "./apiConfig";
 
-export const getItemsByLocation = async (locationId) => {
-  if (USE_MOCK_DATA) {
-    return fakeDelay(
-      mockItems.filter((item) => item.location_id === Number(locationId)),
-    );
-  }
-  return request(`/locations/${locationId}/items`);
-};
+export const getItemsByLocation = async (locationId) =>
+  request(`/locations/${locationId}/items`);
 
-export const getItemById = async (locationId, itemId) => {
-  if (USE_MOCK_DATA) {
-    const item = mockItems.find(
-      (row) =>
-        row.id === Number(itemId) && row.location_id === Number(locationId),
-    );
-    if (!item) throw new Error("Item not found.");
-    return fakeDelay(item);
-  }
-  return request(`/locations/${locationId}/items/${itemId}`);
-};
+export const getItemById = async (locationId, itemId) =>
+  request(`/locations/${locationId}/items/${itemId}`);
 
 export const createItem = async (locationId, item) =>
   request(`/locations/${locationId}/items`, {

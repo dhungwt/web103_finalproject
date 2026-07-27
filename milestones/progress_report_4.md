@@ -16,7 +16,9 @@ List each issue you completed this unit and the main file or folder where that w
 - [Frontend] Display tags on location card and detail page — fetch and show tags for each location
 - [Frontend] Add tag filtering — filter locations by tag on the home page (this covers your filtering custom feature)
 - [Frontend] Add tag selection to add/edit location form — allow users to assign tags when creating or editing a location
+- [Frontend] Create the login page
 - User login - server/routes/auth.js
+- [Backend] Logout logic
 - Fill out the progress_report_4
 - [Deploy] Deploy app to Render — final milestone requirement
 

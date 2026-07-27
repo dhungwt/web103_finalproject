@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { getLocationById } from "../services/locationsApi";
 import { getItemsByLocation } from "../services/itemsApi";
 import ItemCard from "../components/ItemCard";
@@ -52,6 +52,9 @@ function LocationDetailPage() {
                 <span className={location.visited ? "badge badge--visited" : "badge"}>
                         {location.visited ? "Visited" : "Want to go"}
                 </span>
+                <Link to={`/locations/${id}/edit`} className="headerBtn">
+                    Edit Location
+                </Link>
                 </div>
                 
                 {location.image_url ? (
