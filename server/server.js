@@ -18,9 +18,6 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
 
-if (!process.env.SESSION_SECRET) {
-  console.warn("⚠️  SESSION_SECRET is not set in .env — using an insecure default.");
-}
 
 app.use(
   cors({
@@ -31,31 +28,23 @@ app.use(
 );
 app.use(express.json());
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "insecure-dev-only-secret",
+app.use(session({
+    secret: 'codepath',
     resave: false,
-    saveUninitialized: true,
-    cookie: {
-      httpOnly: true,
-      secure: false, // set to true once served over https in production
-      sameSite: "lax",
-      maxAge: 24 * 60 * 60 * 1000, // 1 day
-    },
-  }),
-);
+    saveUninitialized: true
+}))
 
 // setup and initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(GitHub);
 
-// only the user id goes into the session cookie's server-side store...
+// passort seriablise and deserialize functions
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-// ...and every request looks the user back up fresh from the database
+
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await getUserById(id);
@@ -65,6 +54,7 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
+// routes
 app.use("/api/locations", locationsRoutes);
 app.use("/api/tags", tagsRoutes);
 app.use("/api/users", usersRoutes);

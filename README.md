@@ -64,6 +64,10 @@ User will be able to remove  individual food and drink served at the cafe or bak
 
 ### [ADDITIONAL FEATURES GO HERE - ADD ALL FEATURES HERE IN THE FORMAT ABOVE; 
 
+### [User login via GitHub]
+
+User will be able to authenticate and use curate their own data
+
 ### [Filter locations by tag]
 
 User will be able to filter locations to “Visited”, “Not Visited”, “Gluten-Free”, “Good for kids”, etc

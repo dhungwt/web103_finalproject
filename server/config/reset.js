@@ -103,31 +103,12 @@ const seedTables = async () => {
   console.log("Sample bakery data seeded.");
 };
 
-// const createUsersTable = async () => {
-//     const createUsersTableQuery = `
-//         CREATE TABLE IF NOT EXISTS users (
-//             id serial PRIMARY KEY,
-//             githubid integer NOT NULL,
-//             username varchar(100) NOT NULL,
-//             avatarurl varchar(500) NOT NULL,
-//             accesstoken varchar(500) NOT NULL
-//         );
-//     `
-
-//     try {
-//         const res = await pool.query(createUsersTableQuery)
-//         console.log('🎉 users table created successfully')
-//     } catch (err) {
-//         console.error('⚠️ error creating users table', err)
-//     }
-// }
-
 
 const reset = async () => {
   try {
     await createTables();
     await seedTables();
-    //await createUsersTable();
+    
   } catch (err) {
     console.error("Error resetting database:", err);
   } finally {
