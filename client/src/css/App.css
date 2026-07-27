@@ -14,6 +14,9 @@
 }
 
 .app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 24px 0;
   border-bottom: 1px solid var(--border);
   margin-bottom: 32px;
@@ -24,6 +27,28 @@
   font-weight: 600;
   color: var(--text-h);
   text-decoration: none;
+}
+
+.app-header__auth {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.headerBtn {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-h);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 16px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.headerBtn:hover {
+  border-color: var(--accent-border);
 }
 
 .badge {

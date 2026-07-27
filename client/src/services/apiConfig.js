@@ -6,7 +6,9 @@
 
 export const USE_MOCK_DATA = true;
 
-export const BASE_URL = "http://localhost:3000/api";
+export const SERVER_URL = "http://localhost:3000";
+
+export const BASE_URL = `${SERVER_URL}/api`;
 
 export const fakeDelay = (value) =>
   new Promise((resolve) => setTimeout(() => resolve(value), 300));

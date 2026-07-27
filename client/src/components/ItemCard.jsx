@@ -1,4 +1,4 @@
-function ItemCard({ item }) {
+function ItemCard({ item, onEdit }) {
   const { name, category, rating, notes, image_url } = item;
 
   return (
@@ -18,6 +18,13 @@ function ItemCard({ item }) {
         </div>
         <p>Rating: {rating}/5</p>
         {notes && <p className="location-card__notes">{notes}</p>}
+        {onEdit && (
+          <button className="location-card__edit" 
+          onClick={() => onEdit(item)}
+          >
+            Edit
+          </button>
+        )}
       </div>
     </div>
   );

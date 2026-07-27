@@ -5,7 +5,7 @@ import {
   createLocation,
   updateLocation,
   deleteLocation,
-} from "../controllers/controllocations.js";
+} from "../controllers/controlLocations.js";
 import {
   getAllItems,
   getItemById,
@@ -18,7 +18,10 @@ import {
   addTagToLocation,
   removeTagFromLocation,
 } from "../controllers/controlTags.js";
+import { getUsersByLocation } from "../controllers/controlUsers.js";
 
+
+// initilaize the router
 const router = express.Router();
 
 router.get("/", getAllLocations);
@@ -38,6 +41,9 @@ router.delete("/:locationId/items/:itemId", deleteItem);
 router.get("/:locationId/tags", getTagsByLocation);
 router.post("/:locationId/tags", addTagToLocation);
 router.delete("/:locationId/tags/:tagId", removeTagFromLocation);
+
+//user routes
+router.get("/:locationId/users", getUsersByLocation);
 
 
 export default router;
