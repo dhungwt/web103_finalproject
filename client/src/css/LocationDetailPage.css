@@ -1,33 +1,225 @@
-.location-header {
-    padding-bottom: 25px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+/* Location detail — restaurant card view */
+
+.detail-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--bg);
+  padding: 24px 28px 28px;
+  box-shadow: var(--shadow);
 }
 
-.location-header h1 {
-  font-size: 32px;
+.detail-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.detail-card__header h1 {
+  font-size: 28px;
   letter-spacing: -0.5px;
-  margin: 0 0 4px;
+  margin: 0;
 }
 
-.location-header p {
+/* Hero: image on the left, rating + description on the right */
+.detail-hero {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.detail-hero__image {
+  width: 260px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: var(--code-bg);
+  flex-shrink: 0;
+}
+
+.detail-hero__image--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+}
+
+.detail-hero__info {
+  display: flex;
+  flex: 1;
+  min-width: 200px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.detail-hero__rating {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-h);
+  margin: 0;
+}
+
+.detail-hero__rating small {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text);
+}
+
+.detail-hero__address {
+  font-size: 14px;
+  margin: 0;
+}
+
+.detail-hero__desc {
   font-size: 15px;
-  margin-bottom: 28px;
+  line-height: 145%;
+  margin: 0;
 }
 
-.location-name {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
+/* Items bar: heading + category filters, with a divider underneath */
+.items-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
 }
 
-.location-name .headerBtn {
-    margin-left: auto;
-    text-decoration: none;
+.items-bar h2 {
+  font-size: 20px;
+  margin: 0;
 }
 
-span {
-    padding-bottom: 10px;
+.items-bar__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-pill {
+  font-size: 13px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.filter-pill:hover {
+  border-color: var(--accent-border);
+}
+
+.filter-pill--active {
+  color: var(--accent);
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
+}
+
+.add-item-btn {
+  margin-left: auto;
+  font-size: 13px;
+  padding: 5px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+  color: var(--text-h);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.add-item-btn:hover {
+  border-color: var(--accent-border);
+}
+
+/* Item grid — denser so a few items don't read as a tall, sparse column */
+.item-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 16px;
+}
+
+/* Item card */
+.item-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.item-card:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+.item-card__media {
+  position: relative;
+  height: 120px;
+  background: var(--code-bg);
+}
+
+.item-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.item-card__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+}
+
+.item-card__edit {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+/* Reveal the edit button only when the card is hovered or the button is focused */
+.item-card:hover .item-card__edit,
+.item-card__edit:focus-visible {
+  opacity: 1;
+}
+
+.item-card__edit:hover {
+  border-color: var(--accent-border);
+}
+
+.item-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 14px;
+}
+
+.item-card__name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+.item-card__rating {
+  font-size: 13px;
+  color: var(--text);
+  white-space: nowrap;
 }

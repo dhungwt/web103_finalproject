@@ -29,7 +29,7 @@ export const getLocationById = async (req, res) => {
 };
 
 export const createLocation = async (req, res) => {
-  const { name, address, notes, image_url, visited } = req.body;
+  const { name, address, notes, image_url, visited, rating } = req.body;
 
   if (!name) {
     return res.status(400).json({ error: "Name is required." });
@@ -37,9 +37,9 @@ export const createLocation = async (req, res) => {
 
   try {
     const result = await pool.query(
-      `INSERT INTO locations (name, address, notes, image_url, visited)
-                VALUES ($1, $2, $3, $4, $5) RETURNING *;`,
-      [name, address, notes, image_url, visited],
+      `INSERT INTO locations (name, address, notes, image_url, visited, rating)
+                VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`,
+      [name, address, notes, image_url, visited, rating],
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -50,7 +50,7 @@ export const createLocation = async (req, res) => {
 
 export const updateLocation = async (req, res) => {
   const { id } = req.params;
-  const fields = ["name", "address", "notes", "image_url", "visited"];
+  const fields = ["name", "address", "notes", "image_url", "visited", "rating"];
 
   const updates = [];
   const values = [];

@@ -17,6 +17,7 @@ function LocationFormPage() {
     notes: "",
     image_url: "",
     visited: false,
+    rating: "",
   });
   const [error, setError] = useState(null); 
 
@@ -45,11 +46,18 @@ function LocationFormPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Rating is optional — send null (not "") so the numeric column accepts a blank.
+    const payload = {
+      ...form,
+      rating: form.rating === "" || form.rating == null ? null : Number(form.rating),
+    };
+
     try {
       if (isEditing) {
-        await updateLocation(id, form);
+        await updateLocation(id, payload);
       } else {
-        await createLocation(form);
+        await createLocation(payload);
       }
       navigate("/");
     } catch (error) {
@@ -93,6 +101,18 @@ function LocationFormPage() {
             type="text"
             name="image_url"
             value={form.image_url}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Rating:
+          <input
+            type="number"
+            name="rating"
+            min="0"
+            max="5"
+            step="0.1"
+            value={form.rating ?? ""}
             onChange={handleChange}
           />
         </label>

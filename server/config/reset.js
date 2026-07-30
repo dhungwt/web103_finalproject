@@ -16,6 +16,7 @@ const createTables = async () => {
       notes TEXT,
       image_url VARCHAR(500),
       visited BOOLEAN DEFAULT FALSE,
+      rating NUMERIC(2,1),
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
   `);
@@ -55,8 +56,8 @@ const seedTables = async () => {
   const locationIds = [];
   for (const loc of locations) {
     const result = await pool.query(
-      `INSERT INTO locations (name, address, notes, image_url, visited)
-       VALUES ($1, $2, $3, $4, $5)
+      `INSERT INTO locations (name, address, notes, image_url, visited, rating)
+       VALUES ($1, $2, $3, $4, $5, $6)
        RETURNING id;`,
       [
         loc.name,
@@ -64,6 +65,7 @@ const seedTables = async () => {
         loc.notes,
         loc.image_url,
         loc.visited,
+        loc.rating,
       ]
     );
     locationIds.push(result.rows[0].id);
