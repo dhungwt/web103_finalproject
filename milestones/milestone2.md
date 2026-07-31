@@ -27,4 +27,3 @@ Collaborating across our schedules continues to be challenging
 ### 3. What additional support will you need in upcoming units as you continue to work on your final project?
 
 Continued support from TF to keep our team on top of weekly assignments.
-
