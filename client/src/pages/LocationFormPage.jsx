@@ -5,6 +5,7 @@ import {
   updateLocation,
   getLocationById,
 } from "../services/locationsApi";
+import "../css/LocationFormPage.css";
 
 function LocationFormPage() {
   const { id } = useParams();
@@ -62,50 +63,80 @@ function LocationFormPage() {
     {error && <p className="status status--error">{error}</p>}
     <div className="location-form-page">
       <h2>{isEditing ? "Edit Location" : "Add Location"}</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
+      <form className="location-form" onSubmit={handleSubmit}>
+
+        {/*Name element*/}
+        <div className="form-field">
+          <label htmlFor="name">Name</label>
           <input
+            id="name"
             type="text"
             name="name"
+            placeholder="Enter location name"
             value={form.name}
             onChange={handleChange}
             required
           />
-        </label>
-        <label>
-          Address:
+        </div>
+
+        {/*Address element*/}
+        <div className="form-field">
+          <label htmlFor="address">Address</label>
           <input
+            id="address"
             type="text"
             name="address"
+            placeholder="Enter address"
             value={form.address}
             onChange={handleChange}
             required
           />
-        </label>
-        <label>
-          Notes:
-          <textarea name="notes" value={form.notes} onChange={handleChange} />
-        </label>
-        <label>
-          Image URL:
+        </div>
+
+        {/*Notes element*/}
+        <div className="form-field">
+          <label htmlFor="notes">Notes</label>
+          <textarea
+            id="notes"
+            name="notes"
+            placeholder="Enter notes"
+            value={form.notes}
+            onChange={handleChange}
+          />
+        </div>
+
+        {/*Image URL element*/}
+        <div className="form-field">
+          <label htmlFor="image_url">Image URL</label>
           <input
+            id="image_url"
             type="text"
             name="image_url"
+            placeholder="Enter image URL"
             value={form.image_url}
             onChange={handleChange}
           />
-        </label>
-        <label>
-          Visited:
-          <input
-            type="checkbox"
-            name="visited"
-            checked={form.visited}
-            onChange={handleChange}
-          />
-        </label>
-        <button type="submit">{isEditing ? "Update" : "Add"} Location</button>
+        </div>
+
+        {/*Visited element*/}
+        <div className="form-field form-field--checkbox">
+          <label htmlFor="visited">
+            <input
+              id="visited"
+              type="checkbox"
+              name="visited"
+              checked={form.visited}
+              onChange={handleChange}
+            />
+            Visited
+          </label>
+        </div>
+
+        {/*Submit button element*/}
+        <div className="form-actions">
+          <button type="submit">{isEditing ? "Update" : "Add"} Location</button>
+        </div>
+
       </form>
     </div>
     </>

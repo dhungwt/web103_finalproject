@@ -1,0 +1,21 @@
+/* LocationFormPage */
+
+.location-form-page {
+  max-width: 780px;
+  width: 500px;
+  margin: 0 auto;
+}
+
+.location-form-page h2 {
+  text-align: left;
+}
+
+.location-form {
+  display: flex;
+  flex-direction: column; 
+  gap: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  padding: 24px;
+}

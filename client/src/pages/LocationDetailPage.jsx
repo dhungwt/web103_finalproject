@@ -1,15 +1,37 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom"
 import { getLocationById } from "../services/locationsApi";
-import { getItemsByLocation } from "../services/itemsApi";
+import { getItemsByLocation, createItem } from "../services/itemsApi";
+import {
+  getTags,
+  getTagsByLocation,
+  addTagToLocation,
+  removeTagFromLocation,
+} from "../services/tagsApi";
 import ItemCard from "../components/ItemCard";
 import "../css/LocationDetailPage.css";
+
+const emptyItemForm = {
+    name: "",
+    category: "",
+    rating: "",
+    notes: "",
+    image_url: "",
+};
 
 function LocationDetailPage() {
     const { id } = useParams();
     const [location, setLocation] = useState(null);
     const [error, setError] = useState(null);
     const [items, setItems] = useState([]);
+
+    const [allTags, setAllTags] = useState([]);
+    const [locationTags, setLocationTags] = useState([]);
+    const [tagPending, setTagPending] = useState(null);
+
+    const [showItemForm, setShowItemForm] = useState(false);
+    const [itemForm, setItemForm] = useState(emptyItemForm);
+    const [itemError, setItemError] = useState(null);
 
     useEffect(() => {
         const fetchLocation = async () => {
@@ -19,7 +41,7 @@ function LocationDetailPage() {
           } catch (err) {
             console.error(err);
             setError("Location not found.");
-          } 
+          }
         };
 
         const fetchItems = async () => {
@@ -31,10 +53,66 @@ function LocationDetailPage() {
                 setError("Items not found.");
             }
         }
-    
+
+        const fetchTags = async () => {
+            try {
+                const [all, applied] = await Promise.all([
+                    getTags(),
+                    getTagsByLocation(id),
+                ]);
+                setAllTags(all);
+                setLocationTags(applied);
+            } catch (err) {
+                console.error(err);
+                setError("Tags not found.");
+            }
+        }
+
         fetchLocation();
         fetchItems();
+        fetchTags();
     }, [id]);
+
+    const toggleTag = async (tag) => {
+        const isApplied = locationTags.some((t) => t.id === tag.id);
+        setTagPending(tag.id);
+        try {
+            if (isApplied) {
+                await removeTagFromLocation(id, tag.id);
+                setLocationTags((prev) => prev.filter((t) => t.id !== tag.id));
+            } else {
+                await addTagToLocation(id, tag.id);
+                setLocationTags((prev) => [...prev, tag]);
+            }
+        } catch (err) {
+            console.error(err);
+            setError("Unable to update tag.");
+        } finally {
+            setTagPending(null);
+        }
+    };
+
+    const handleItemChange = (e) => {
+        const { name, value } = e.target;
+        setItemForm((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleItemSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const newItem = await createItem(id, {
+                ...itemForm,
+                rating: itemForm.rating ? Number(itemForm.rating) : null,
+            });
+            setItems((prev) => [newItem, ...prev]);
+            setItemForm(emptyItemForm);
+            setShowItemForm(false);
+            setItemError(null);
+        } catch (err) {
+            console.error(err);
+            setItemError("Unable to add item. Please try again.");
+        }
+    };
 
     if (!location) {
         return <p>Loading...</p>;
@@ -66,19 +144,120 @@ function LocationDetailPage() {
                 )}
                 <h2>{location.address}</h2>
                 <p>{location.notes}</p>
+
+                <div className="tags-section">
+                    <h2>Tags</h2>
+                    <div className="tags-container">
+                        {allTags.map((tag) => {
+                            const isApplied = locationTags.some((t) => t.id === tag.id);
+                            return (
+                                <button
+                                    key={tag.id}
+                                    type="button"
+                                    className={isApplied ? "tag-chip tag-chip--active" : "tag-chip"}
+                                    disabled={tagPending === tag.id}
+                                    onClick={() => toggleTag(tag)}
+                                >
+                                    {tag.name}
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
             </div>
-            
+
             <div className="items-container">
-                <h2>Items</h2>
+                <div className="items-header">
+                    <h2>Items</h2>
+                    <button
+                        type="button"
+                        className="headerBtn"
+                        onClick={() => setShowItemForm((prev) => !prev)}
+                    >
+                        {showItemForm ? "Cancel" : "Add Item"}
+                    </button>
+                </div>
+
+                {showItemForm && (
+                    <form className="item-form" onSubmit={handleItemSubmit}>
+                        {itemError && <p className="status status--error">{itemError}</p>}
+
+                        <div className="form-field">
+                            <label htmlFor="item-name">Name</label>
+                            <input
+                                id="item-name"
+                                type="text"
+                                name="name"
+                                placeholder="Enter item name"
+                                value={itemForm.name}
+                                onChange={handleItemChange}
+                                required
+                            />
+                        </div>
+
+                        <div className="form-field">
+                            <label htmlFor="item-category">Category</label>
+                            <input
+                                id="item-category"
+                                type="text"
+                                name="category"
+                                placeholder="e.g. Cookie, Pastry, Bread"
+                                value={itemForm.category}
+                                onChange={handleItemChange}
+                            />
+                        </div>
+
+                        <div className="form-field">
+                            <label htmlFor="item-rating">Rating</label>
+                            <input
+                                id="item-rating"
+                                type="number"
+                                name="rating"
+                                min="1"
+                                max="5"
+                                placeholder="1-5"
+                                value={itemForm.rating}
+                                onChange={handleItemChange}
+                            />
+                        </div>
+
+                        <div className="form-field">
+                            <label htmlFor="item-notes">Notes</label>
+                            <textarea
+                                id="item-notes"
+                                name="notes"
+                                placeholder="Enter notes"
+                                value={itemForm.notes}
+                                onChange={handleItemChange}
+                            />
+                        </div>
+
+                        <div className="form-field">
+                            <label htmlFor="item-image_url">Image URL</label>
+                            <input
+                                id="item-image_url"
+                                type="text"
+                                name="image_url"
+                                placeholder="Enter image URL"
+                                value={itemForm.image_url}
+                                onChange={handleItemChange}
+                            />
+                        </div>
+
+                        <div className="form-actions">
+                            <button type="submit">Add Item</button>
+                        </div>
+                    </form>
+                )}
+
                 <div className="location-grid">
                     {items.map((item) => (
-                        <ItemCard item={item} />
+                        <ItemCard key={item.id} item={item} />
                     ))}
-
                 </div>
             </div>
         </div>
-    
+
     )
 
 }
