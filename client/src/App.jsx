@@ -40,6 +40,7 @@ function App() {
             Log Out
           </button>
         </div>
+        
       </header>
 
       <main className="app-main">

@@ -18,7 +18,6 @@ Major Restaurant review, reservation and ordering platforms like Yelp, OpenTable
 
 <img width="797" height="768" alt="Screenshot 2026-07-05 at 1 30 05 PM" src="https://github.com/user-attachments/assets/8da7139b-cf54-4fc8-9b58-d1a76c34f179" />
 
-
 ## Tech Stack
 
 Frontend:
