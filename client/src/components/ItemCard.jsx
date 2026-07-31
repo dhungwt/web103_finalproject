@@ -1,30 +1,28 @@
 function ItemCard({ item, onEdit }) {
-  const { name, category, rating, notes, image_url } = item;
+  const { name, rating, image_url } = item;
 
   return (
-    <div className="location-card">
-      {image_url ? (
-        <img className="location-card__image" src={image_url} alt={name} />
-      ) : (
-        <div className="location-card__image location-card__image--empty">
-          🍰
-        </div>
-      )}
-
-      <div className="location-card__body">
-        <div className="location-card__heading">
-          <h2>{name}</h2>
-          <span>{category}</span>
-        </div>
-        <p>Rating: {rating}/5</p>
-        {notes && <p className="location-card__notes">{notes}</p>}
+    <div className="item-card">
+      <div className="item-card__media">
+        {image_url ? (
+          <img src={image_url} alt={name} />
+        ) : (
+          <div className="item-card__placeholder">🍰</div>
+        )}
         {onEdit && (
-          <button className="location-card__edit" 
-          onClick={() => onEdit(item)}
+          <button
+            type="button"
+            className="item-card__edit"
+            onClick={() => onEdit(item)}
           >
             Edit
           </button>
         )}
+      </div>
+
+      <div className="item-card__footer">
+        <span className="item-card__name">{name}</span>
+        {rating != null && <span className="item-card__rating">★ {rating}</span>}
       </div>
     </div>
   );

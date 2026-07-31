@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom"
+import { useParams, Link } from "react-router-dom";
 import { getLocationById } from "../services/locationsApi";
 import { getItemsByLocation, createItem } from "../services/itemsApi";
 import {
@@ -12,254 +12,286 @@ import ItemCard from "../components/ItemCard";
 import "../css/LocationDetailPage.css";
 
 const emptyItemForm = {
-    name: "",
-    category: "",
-    rating: "",
-    notes: "",
-    image_url: "",
+  name: "",
+  category: "",
+  rating: "",
+  notes: "",
+  image_url: "",
 };
 
 function LocationDetailPage() {
-    const { id } = useParams();
-    const [location, setLocation] = useState(null);
-    const [error, setError] = useState(null);
-    const [items, setItems] = useState([]);
+  const { id } = useParams();
+  const [location, setLocation] = useState(null);
+  const [items, setItems] = useState([]);
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [error, setError] = useState(null);
 
-    const [allTags, setAllTags] = useState([]);
-    const [locationTags, setLocationTags] = useState([]);
-    const [tagPending, setTagPending] = useState(null);
+  const [allTags, setAllTags] = useState([]);
+  const [locationTags, setLocationTags] = useState([]);
+  const [tagPending, setTagPending] = useState(null);
 
-    const [showItemForm, setShowItemForm] = useState(false);
-    const [itemForm, setItemForm] = useState(emptyItemForm);
-    const [itemError, setItemError] = useState(null);
+  const [showItemForm, setShowItemForm] = useState(false);
+  const [itemForm, setItemForm] = useState(emptyItemForm);
+  const [itemError, setItemError] = useState(null);
 
-    useEffect(() => {
-        const fetchLocation = async () => {
-          try {
-            const data = await getLocationById(id);
-            setLocation(data);
-          } catch (err) {
-            console.error(err);
-            setError("Location not found.");
-          }
-        };
-
-        const fetchItems = async () => {
-            try {
-                const itemData = await getItemsByLocation(id);
-                setItems(itemData);
-            } catch (err) {
-                console.error(err);
-                setError("Items not found.");
-            }
-        }
-
-        const fetchTags = async () => {
-            try {
-                const [all, applied] = await Promise.all([
-                    getTags(),
-                    getTagsByLocation(id),
-                ]);
-                setAllTags(all);
-                setLocationTags(applied);
-            } catch (err) {
-                console.error(err);
-                setError("Tags not found.");
-            }
-        }
-
-        fetchLocation();
-        fetchItems();
-        fetchTags();
-    }, [id]);
-
-    const toggleTag = async (tag) => {
-        const isApplied = locationTags.some((t) => t.id === tag.id);
-        setTagPending(tag.id);
-        try {
-            if (isApplied) {
-                await removeTagFromLocation(id, tag.id);
-                setLocationTags((prev) => prev.filter((t) => t.id !== tag.id));
-            } else {
-                await addTagToLocation(id, tag.id);
-                setLocationTags((prev) => [...prev, tag]);
-            }
-        } catch (err) {
-            console.error(err);
-            setError("Unable to update tag.");
-        } finally {
-            setTagPending(null);
-        }
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        const data = await getLocationById(id);
+        setLocation(data);
+      } catch (err) {
+        console.error(err);
+        setError("Location not found.");
+      }
     };
 
-    const handleItemChange = (e) => {
-        const { name, value } = e.target;
-        setItemForm((prev) => ({ ...prev, [name]: value }));
+    const fetchItems = async () => {
+      try {
+        const itemData = await getItemsByLocation(id);
+        setItems(itemData);
+      } catch (err) {
+        console.error(err);
+        setError("Items not found.");
+      }
     };
 
-    const handleItemSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const newItem = await createItem(id, {
-                ...itemForm,
-                rating: itemForm.rating ? Number(itemForm.rating) : null,
-            });
-            setItems((prev) => [newItem, ...prev]);
-            setItemForm(emptyItemForm);
-            setShowItemForm(false);
-            setItemError(null);
-        } catch (err) {
-            console.error(err);
-            setItemError("Unable to add item. Please try again.");
-        }
+    const fetchTags = async () => {
+      try {
+        const [all, applied] = await Promise.all([getTags(), getTagsByLocation(id)]);
+        setAllTags(all);
+        setLocationTags(applied);
+      } catch (err) {
+        console.error(err);
+        setError("Tags not found.");
+      }
     };
 
-    if (!location) {
-        return <p>Loading...</p>;
+    fetchLocation();
+    fetchItems();
+    fetchTags();
+  }, [id]);
+
+  const toggleTag = async (tag) => {
+    const isApplied = locationTags.some((t) => t.id === tag.id);
+    setTagPending(tag.id);
+
+    try {
+      if (isApplied) {
+        await removeTagFromLocation(id, tag.id);
+        setLocationTags((prev) => prev.filter((t) => t.id !== tag.id));
+      } else {
+        await addTagToLocation(id, tag.id);
+        setLocationTags((prev) => [...prev, tag]);
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Unable to update tag.");
+    } finally {
+      setTagPending(null);
     }
+  };
 
-    if (error) {
+  const handleItemChange = (e) => {
+    const { name, value } = e.target;
+    setItemForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleItemSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const newItem = await createItem(id, {
+        ...itemForm,
+        rating: itemForm.rating ? Number(itemForm.rating) : null,
+      });
+      setItems((prev) => [newItem, ...prev]);
+      setItemForm(emptyItemForm);
+      setShowItemForm(false);
+      setItemError(null);
+    } catch (err) {
+      console.error(err);
+      setItemError("Unable to add item. Please try again.");
+    }
+  };
+
+  const handleEditItem = (item) => {
+    console.warn("Item editing isn't wired to a page yet:", item);
+  };
+
+  if (error) {
     return <p className="status status--error">{error}</p>;
   }
 
-    return (
-        <div>
-            <div className="location-header">
-                <div className="location-name">
-                <h1>{location.name}</h1>
-                <span className={location.visited ? "badge badge--visited" : "badge"}>
-                        {location.visited ? "Visited" : "Want to go"}
-                </span>
-                <Link to={`/locations/${id}/edit`} className="headerBtn">
-                    Edit Location
-                </Link>
-                </div>
-                
-                {location.image_url ? (
-                    <img className="location-card__image" src={location.image_url} alt={location.name} />
-                ) : (
-                    <div className="location-card__image location-card__image--empty">
-                    🍰
-                    </div>
-                )}
-                <h2>{location.address}</h2>
-                <p>{location.notes}</p>
+  if (!location) {
+    return <p className="status">Loading...</p>;
+  }
 
-                <div className="tags-section">
-                    <h2>Tags</h2>
-                    <div className="tags-container">
-                        {allTags.map((tag) => {
-                            const isApplied = locationTags.some((t) => t.id === tag.id);
-                            return (
-                                <button
-                                    key={tag.id}
-                                    type="button"
-                                    className={isApplied ? "tag-chip tag-chip--active" : "tag-chip"}
-                                    disabled={tagPending === tag.id}
-                                    onClick={() => toggleTag(tag)}
-                                >
-                                    {tag.name}
-                                </button>
-                            );
-                        })}
-                    </div>
-                </div>
-            </div>
+  const categories = ["All", ...new Set(items.map((i) => i.category).filter(Boolean))];
+  const visibleItems =
+    activeCategory === "All"
+      ? items
+      : items.filter((i) => i.category === activeCategory);
 
-            <div className="items-container">
-                <div className="items-header">
-                    <h2>Items</h2>
-                    <button
-                        type="button"
-                        className="headerBtn"
-                        onClick={() => setShowItemForm((prev) => !prev)}
-                    >
-                        {showItemForm ? "Cancel" : "Add Item"}
-                    </button>
-                </div>
+  return (
+    <div className="detail-card">
+      <header className="detail-card__header">
+        <h1>{location.name}</h1>
+        <Link to={`/locations/${id}/edit`} className="headerBtn">
+          Edit
+        </Link>
+      </header>
 
-                {showItemForm && (
-                    <form className="item-form" onSubmit={handleItemSubmit}>
-                        {itemError && <p className="status status--error">{itemError}</p>}
+      <section className="detail-hero">
+        {location.image_url ? (
+          <img className="detail-hero__image" src={location.image_url} alt={location.name} />
+        ) : (
+          <div className="detail-hero__image detail-hero__image--empty">🍰</div>
+        )}
 
-                        <div className="form-field">
-                            <label htmlFor="item-name">Name</label>
-                            <input
-                                id="item-name"
-                                type="text"
-                                name="name"
-                                placeholder="Enter item name"
-                                value={itemForm.name}
-                                onChange={handleItemChange}
-                                required
-                            />
-                        </div>
-
-                        <div className="form-field">
-                            <label htmlFor="item-category">Category</label>
-                            <input
-                                id="item-category"
-                                type="text"
-                                name="category"
-                                placeholder="e.g. Cookie, Pastry, Bread"
-                                value={itemForm.category}
-                                onChange={handleItemChange}
-                            />
-                        </div>
-
-                        <div className="form-field">
-                            <label htmlFor="item-rating">Rating</label>
-                            <input
-                                id="item-rating"
-                                type="number"
-                                name="rating"
-                                min="1"
-                                max="5"
-                                placeholder="1-5"
-                                value={itemForm.rating}
-                                onChange={handleItemChange}
-                            />
-                        </div>
-
-                        <div className="form-field">
-                            <label htmlFor="item-notes">Notes</label>
-                            <textarea
-                                id="item-notes"
-                                name="notes"
-                                placeholder="Enter notes"
-                                value={itemForm.notes}
-                                onChange={handleItemChange}
-                            />
-                        </div>
-
-                        <div className="form-field">
-                            <label htmlFor="item-image_url">Image URL</label>
-                            <input
-                                id="item-image_url"
-                                type="text"
-                                name="image_url"
-                                placeholder="Enter image URL"
-                                value={itemForm.image_url}
-                                onChange={handleItemChange}
-                            />
-                        </div>
-
-                        <div className="form-actions">
-                            <button type="submit">Add Item</button>
-                        </div>
-                    </form>
-                )}
-
-                <div className="location-grid">
-                    {items.map((item) => (
-                        <ItemCard key={item.id} item={item} />
-                    ))}
-                </div>
-            </div>
+        <div className="detail-hero__info">
+          <span className={location.visited ? "badge badge--visited" : "badge"}>
+            {location.visited ? "Visited" : "Want to go"}
+          </span>
+          <p className="detail-hero__rating">
+            {location.rating != null ? (
+              <>
+                ★ {Number(location.rating).toFixed(1)} <small>/ 5</small>
+              </>
+            ) : (
+              "Not rated yet"
+            )}
+          </p>
+          {location.address && <p className="detail-hero__address">{location.address}</p>}
+          {location.notes && <p className="detail-hero__desc">{location.notes}</p>}
         </div>
+      </section>
 
-    )
+      <section className="tags-section">
+        <h2>Tags</h2>
+        <div className="tags-container">
+          {allTags.map((tag) => {
+            const isApplied = locationTags.some((t) => t.id === tag.id);
+            return (
+              <button
+                key={tag.id}
+                type="button"
+                className={isApplied ? "tag-chip tag-chip--active" : "tag-chip"}
+                disabled={tagPending === tag.id}
+                onClick={() => toggleTag(tag)}
+              >
+                {tag.name}
+              </button>
+            );
+          })}
+        </div>
+      </section>
 
+      <div className="items-bar">
+        <h2>Items</h2>
+        <div className="items-bar__filters">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              type="button"
+              className={
+                activeCategory === cat
+                  ? "filter-pill filter-pill--active"
+                  : "filter-pill"
+              }
+              onClick={() => setActiveCategory(cat)}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+        <button
+          type="button"
+          className="add-item-btn"
+          onClick={() => setShowItemForm((prev) => !prev)}
+        >
+          {showItemForm ? "Cancel" : "Add Item"}
+        </button>
+      </div>
+
+      {showItemForm && (
+        <form className="item-form" onSubmit={handleItemSubmit}>
+          {itemError && <p className="status status--error">{itemError}</p>}
+
+          <div className="form-field">
+            <label htmlFor="item-name">Name</label>
+            <input
+              id="item-name"
+              type="text"
+              name="name"
+              placeholder="Enter item name"
+              value={itemForm.name}
+              onChange={handleItemChange}
+              required
+            />
+          </div>
+
+          <div className="form-field">
+            <label htmlFor="item-category">Category</label>
+            <input
+              id="item-category"
+              type="text"
+              name="category"
+              placeholder="e.g. Cookie, Pastry, Bread"
+              value={itemForm.category}
+              onChange={handleItemChange}
+            />
+          </div>
+
+          <div className="form-field">
+            <label htmlFor="item-rating">Rating</label>
+            <input
+              id="item-rating"
+              type="number"
+              name="rating"
+              min="1"
+              max="5"
+              placeholder="1-5"
+              value={itemForm.rating}
+              onChange={handleItemChange}
+            />
+          </div>
+
+          <div className="form-field">
+            <label htmlFor="item-notes">Notes</label>
+            <textarea
+              id="item-notes"
+              name="notes"
+              placeholder="Enter notes"
+              value={itemForm.notes}
+              onChange={handleItemChange}
+            />
+          </div>
+
+          <div className="form-field">
+            <label htmlFor="item-image_url">Image URL</label>
+            <input
+              id="item-image_url"
+              type="text"
+              name="image_url"
+              placeholder="Enter image URL"
+              value={itemForm.image_url}
+              onChange={handleItemChange}
+            />
+          </div>
+
+          <div className="form-actions">
+            <button type="submit">Add Item</button>
+          </div>
+        </form>
+      )}
+
+      <div className="item-grid">
+        {visibleItems.map((item) => (
+          <ItemCard key={item.id} item={item} onEdit={handleEditItem} />
+        ))}
+      </div>
+    </div>
+  );
 }
 
-export default LocationDetailPage
+export default LocationDetailPage;

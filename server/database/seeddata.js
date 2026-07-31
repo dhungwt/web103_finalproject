@@ -15,6 +15,7 @@ export const locations = [
     notes: "Famous for their massive cookies. Always a line but worth it!",
     image_url: "https://levainbakery.com/cdn/shop/files/Homepage_angledcard_baking.png?v=1746959193",
     visited: true,
+    rating: 4.8,
   },
   {
     name: "Breads Bakery",
@@ -22,6 +23,7 @@ export const locations = [
     notes: "Best babka in the city. Great coffee too.",
     image_url: "https://bakefromscratch.com/wp-content/uploads/2017/02/IMG_0123.jpg",
     visited: false,
+    rating: 4.5,
   },
   {
     name: "Mah-Ze-Dahr Bakery",
@@ -29,6 +31,7 @@ export const locations = [
     notes: "Cozy spot in the West Village. Try the brioche!",
     image_url: "https://www.arlnow.com/wp-content/uploads/2023/07/MZD_NinaPalazzolo-8-e1690223664550.jpg",
     visited: false,
+    rating: 4.0,
   },
 ];
 
