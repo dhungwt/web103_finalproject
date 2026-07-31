@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 function LocationCard({ location }) {
-  const { id, name, address, notes, image_url, visited } = location;
+  const { id, name, address, notes, image_url, visited, tags } = location;
 
   return (
     <Link to={`/locations/${id}`} className="location-card">
@@ -23,6 +23,16 @@ function LocationCard({ location }) {
 
         {address && <p className="location-card__address">{address}</p>}
         {notes && <p className="location-card__notes">{notes}</p>}
+
+        {tags && tags.length > 0 && (
+          <div className="location-card__tags">
+            {tags.map((tag) => (
+              <span key={tag.id} className="tag-chip">
+                {tag.name}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </Link>
   );

@@ -3,7 +3,17 @@ import pool from "../config/database.js";
 export const getAllLocations = async (req, res) => {
   try {
     const result = await pool.query(
-      `SELECT * FROM locations ORDER BY created_at DESC;`,
+      `SELECT locations.*,
+              COALESCE(
+                json_agg(
+                  json_build_object('id', tags.id, 'name', tags.name)
+                ) FILTER (WHERE tags.id IS NOT NULL), '[]'
+              ) AS tags
+       FROM locations
+       LEFT JOIN location_tags ON locations.id = location_tags.location_id
+       LEFT JOIN tags ON location_tags.tag_id = tags.id
+       GROUP BY locations.id
+       ORDER BY locations.created_at DESC;`,
     );
     res.status(200).json(result.rows);
   } catch (err) {

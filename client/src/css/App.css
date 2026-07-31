@@ -67,6 +67,33 @@
   border-color: var(--accent-border);
 }
 
+.tag-chip {
+  font: inherit;
+  font-size: 12px;
+  color: var(--text);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px 10px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.tag-chip:hover {
+  border-color: var(--accent-border);
+}
+
+.tag-chip:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.tag-chip--active {
+  color: var(--accent);
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
+}
+
 .status {
   padding: 40px 0;
   font-size: 16px;
