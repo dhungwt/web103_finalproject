@@ -67,6 +67,33 @@
   border-color: var(--accent-border);
 }
 
+.tag-chip {
+  font: inherit;
+  font-size: 12px;
+  color: var(--text);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px 10px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.tag-chip:hover {
+  border-color: var(--accent-border);
+}
+
+.tag-chip:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.tag-chip--active {
+  color: var(--accent);
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
+}
+
 .status {
   padding: 40px 0;
   font-size: 16px;
@@ -86,4 +113,91 @@
 
 .back-link:hover {
   text-decoration: underline;
+}
+
+/* Shared form-field styling used by the location form and item subform. */
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+.form-field input[type="text"],
+.form-field input[type="number"],
+.form-field textarea {
+  font: inherit;
+  font-size: 15px;
+  color: var(--text-h);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.form-field textarea {
+  min-height: 90px;
+  resize: vertical;
+  font-family: var(--sans);
+}
+
+.form-field input[type="text"]:focus,
+.form-field input[type="number"]:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--accent-border);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: var(--text);
+  opacity: 0.6;
+}
+
+.form-field--checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.form-field--checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 4px;
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+}
+
+.form-actions button {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 999px;
+  padding: 10px 22px;
+  cursor: pointer;
+}
+
+.form-actions button:hover {
+  opacity: 0.9;
 }

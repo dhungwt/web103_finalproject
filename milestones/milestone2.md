@@ -22,7 +22,7 @@ Most team members contributed to the assignment this week.
 
 ### 2. What were some challenges your group faced in this unit?
 
-Collaboraitng across our schedules continues to be challenging
+Collaborating across our schedules continues to be challenging
 
 ### 3. What additional support will you need in upcoming units as you continue to work on your final project?
 

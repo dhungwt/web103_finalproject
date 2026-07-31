@@ -78,6 +78,21 @@
   margin: 0;
 }
 
+.tags-section {
+  margin-top: 18px;
+}
+
+.tags-section h2 {
+  font-size: 18px;
+  margin: 0 0 8px;
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 /* Items bar: heading + category filters, with a divider underneath */
 .items-bar {
   display: flex;
@@ -134,6 +149,13 @@
 
 .add-item-btn:hover {
   border-color: var(--accent-border);
+}
+
+.item-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 18px;
 }
 
 /* Item grid — denser so a few items don't read as a tall, sparse column */

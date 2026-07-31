@@ -29,15 +29,15 @@ Backend:
 
 ### [View all locations in bucket list]
 
-User will be able to view all the places on their bucket list on the home page
+✅ User will be able to view all the places on their bucket list on the home page
 
 ### [Add a place in bucket list]
 
-User will be able to add new locations to their bucket list with details for each such a photo, tags, location and notes.
+✅ User will be able to add new locations to their bucket list with details for each such a photo, tags, location and notes.
 
 ### [Edit a place in bucket list]
 
-User will be able to edit details of a location such as marking a cafe as visited or updating their notes.
+✅ User will be able to edit details of a location such as marking a cafe as visited or updating their notes.
 
 ### [Delete a place in bucket list]
 
