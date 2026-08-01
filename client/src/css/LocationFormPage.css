@@ -108,3 +108,50 @@
   font-size: 13px;
   color: var(--text);
 }
+
+/* Tag selection */
+.tag-select {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-add {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.tag-add input {
+  flex: 1;
+  font: inherit;
+  font-size: 14px;
+  color: var(--text-h);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.tag-add input:focus {
+  outline: none;
+  border-color: var(--accent-border);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.tag-add button {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-h);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tag-add button:hover {
+  border-color: var(--accent-border);
+}

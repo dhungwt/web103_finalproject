@@ -2,12 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { getLocationById, deleteLocation } from "../services/locationsApi";
 import { getItemsByLocation, createItem, deleteItem } from "../services/itemsApi";
-import {
-  getTags,
-  getTagsByLocation,
-  addTagToLocation,
-  removeTagFromLocation,
-} from "../services/tagsApi";
+import { getTagsByLocation } from "../services/tagsApi";
 import ItemCard from "../components/ItemCard";
 import "../css/LocationDetailPage.css";
 
@@ -27,9 +22,7 @@ function LocationDetailPage() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [error, setError] = useState(null);
 
-  const [allTags, setAllTags] = useState([]);
   const [locationTags, setLocationTags] = useState([]);
-  const [tagPending, setTagPending] = useState(null);
 
   const [showItemForm, setShowItemForm] = useState(false);
   const [itemForm, setItemForm] = useState(emptyItemForm);
@@ -82,11 +75,7 @@ function LocationDetailPage() {
 
     const fetchTags = async () => {
       try {
-        const [all, applied] = await Promise.all([
-          getTags(),
-          getTagsByLocation(id),
-        ]);
-        setAllTags(all);
+        const applied = await getTagsByLocation(id);
         setLocationTags(applied);
       } catch (err) {
         console.error(err);
@@ -98,26 +87,6 @@ function LocationDetailPage() {
     fetchItems();
     fetchTags();
   }, [id]);
-
-  const toggleTag = async (tag) => {
-    const isApplied = locationTags.some((t) => t.id === tag.id);
-    setTagPending(tag.id);
-
-    try {
-      if (isApplied) {
-        await removeTagFromLocation(id, tag.id);
-        setLocationTags((prev) => prev.filter((t) => t.id !== tag.id));
-      } else {
-        await addTagToLocation(id, tag.id);
-        setLocationTags((prev) => [...prev, tag]);
-      }
-    } catch (err) {
-      console.error(err);
-      setError("Unable to update tag.");
-    } finally {
-      setTagPending(null);
-    }
-  };
 
   const handleItemChange = (e) => {
     const { name, value } = e.target;
@@ -212,25 +181,18 @@ function LocationDetailPage() {
         </div>
       </section>
 
-      <section className="tags-section">
-        <h2>Tags</h2>
-        <div className="tags-container">
-          {allTags.map((tag) => {
-            const isApplied = locationTags.some((t) => t.id === tag.id);
-            return (
-              <button
-                key={tag.id}
-                type="button"
-                className={isApplied ? "tag-chip tag-chip--active" : "tag-chip"}
-                disabled={tagPending === tag.id}
-                onClick={() => toggleTag(tag)}
-              >
+      {locationTags.length > 0 && (
+        <section className="tags-section">
+          <h2>Tags</h2>
+          <div className="tags-container">
+            {locationTags.map((tag) => (
+              <span key={tag.id} className="tag-chip tag-chip--active tag-chip--static">
                 {tag.name}
-              </button>
-            );
-          })}
-        </div>
-      </section>
+              </span>
+            ))}
+          </div>
+        </section>
+      )}
 
       <div className="items-bar">
         <h2>Items</h2>

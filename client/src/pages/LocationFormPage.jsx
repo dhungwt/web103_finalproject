@@ -6,6 +6,13 @@ import {
   getLocationById,
 } from "../services/locationsApi";
 import { searchPlaces, getPlaceDetails } from "../services/placesApi";
+import {
+  getTags,
+  createTag,
+  getTagsByLocation,
+  addTagToLocation,
+  removeTagFromLocation,
+} from "../services/tagsApi";
 import "../css/LocationFormPage.css";
 
 function LocationFormPage() {
@@ -29,6 +36,26 @@ function LocationFormPage() {
   const [predictions, setPredictions] = useState([]);
   const [searching, setSearching] = useState(false);
 
+  // Tag state
+  const [allTags, setAllTags] = useState([]);
+  const [selectedTagIds, setSelectedTagIds] = useState([]);
+  const [originalTagIds, setOriginalTagIds] = useState([]);
+  const [newTagName, setNewTagName] = useState("");
+
+  // Load the full tag list once (for the selectable chips).
+  useEffect(() => {
+    const loadTags = async () => {
+      try {
+        const tags = await getTags();
+        setAllTags(tags);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    loadTags();
+  }, []);
+
+  // In edit mode, load the location and its current tags.
   useEffect(() => {
     if (!isEditing) return;
 
@@ -36,6 +63,11 @@ function LocationFormPage() {
       try {
         const locationData = await getLocationById(id);
         setForm(locationData);
+
+        const locTags = await getTagsByLocation(id);
+        const ids = locTags.map((t) => t.id);
+        setSelectedTagIds(ids);
+        setOriginalTagIds(ids);
       } catch (fetchError) {
         console.error("Error fetching location:", fetchError);
       }
@@ -86,6 +118,52 @@ function LocationFormPage() {
     }
   };
 
+  const toggleTag = (tagId) => {
+    setSelectedTagIds((prev) =>
+      prev.includes(tagId) ? prev.filter((t) => t !== tagId) : [...prev, tagId],
+    );
+  };
+
+  // Add a brand-new tag the user typed (creating it if it doesn't exist yet).
+  const handleAddNewTag = async () => {
+    const name = newTagName.trim();
+    if (!name) return;
+
+    const existing = allTags.find(
+      (t) => t.name.toLowerCase() === name.toLowerCase(),
+    );
+    if (existing) {
+      setSelectedTagIds((prev) =>
+        prev.includes(existing.id) ? prev : [...prev, existing.id],
+      );
+      setNewTagName("");
+      return;
+    }
+
+    try {
+      const created = await createTag(name);
+      setAllTags((prev) => [...prev, created]);
+      setSelectedTagIds((prev) => [...prev, created.id]);
+      setNewTagName("");
+    } catch (err) {
+      console.error(err);
+      // Likely a race where the tag now exists — refresh and select it.
+      try {
+        const tags = await getTags();
+        setAllTags(tags);
+        const match = tags.find((t) => t.name.toLowerCase() === name.toLowerCase());
+        if (match) {
+          setSelectedTagIds((prev) =>
+            prev.includes(match.id) ? prev : [...prev, match.id],
+          );
+        }
+      } catch (e) {
+        console.error(e);
+      }
+      setNewTagName("");
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm((prevForm) => ({
@@ -100,13 +178,24 @@ function LocationFormPage() {
     const payload = {
       ...form,
       rating: form.rating === "" || form.rating == null ? null : Number(form.rating),
+      place_id: form.place_id || null, // "" would collide on the UNIQUE column
     };
 
     try {
       if (isEditing) {
         await updateLocation(id, payload);
+
+        const toAdd = selectedTagIds.filter((t) => !originalTagIds.includes(t));
+        const toRemove = originalTagIds.filter((t) => !selectedTagIds.includes(t));
+        await Promise.all([
+          ...toAdd.map((t) => addTagToLocation(id, t)),
+          ...toRemove.map((t) => removeTagFromLocation(id, t)),
+        ]);
       } else {
-        await createLocation(payload);
+        const created = await createLocation(payload);
+        await Promise.all(
+          selectedTagIds.map((t) => addTagToLocation(created.id, t)),
+        );
       }
       navigate("/");
     } catch (submitError) {
@@ -214,6 +303,45 @@ function LocationFormPage() {
               value={form.rating ?? ""}
               onChange={handleChange}
             />
+          </div>
+
+          <div className="form-field">
+            <label>Tags</label>
+            {allTags.length > 0 && (
+              <div className="tag-select">
+                {allTags.map((tag) => (
+                  <button
+                    type="button"
+                    key={tag.id}
+                    className={
+                      selectedTagIds.includes(tag.id)
+                        ? "tag-chip tag-chip--active"
+                        : "tag-chip"
+                    }
+                    onClick={() => toggleTag(tag.id)}
+                  >
+                    {tag.name}
+                  </button>
+                ))}
+              </div>
+            )}
+            <div className="tag-add">
+              <input
+                type="text"
+                placeholder="Add a new tag"
+                value={newTagName}
+                onChange={(e) => setNewTagName(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    handleAddNewTag();
+                  }
+                }}
+              />
+              <button type="button" onClick={handleAddNewTag}>
+                Add
+              </button>
+            </div>
           </div>
 
           <div className="form-field form-field--checkbox">
