@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { getLocationById } from "../services/locationsApi";
-import { getItemsByLocation, createItem } from "../services/itemsApi";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { getLocationById, deleteLocation } from "../services/locationsApi";
+import { getItemsByLocation, createItem, deleteItem } from "../services/itemsApi";
 import {
   getTags,
   getTagsByLocation,
@@ -21,6 +21,7 @@ const emptyItemForm = {
 
 function LocationDetailPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [location, setLocation] = useState(null);
   const [items, setItems] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
@@ -33,6 +34,30 @@ function LocationDetailPage() {
   const [showItemForm, setShowItemForm] = useState(false);
   const [itemForm, setItemForm] = useState(emptyItemForm);
   const [itemError, setItemError] = useState(null);
+
+  const handleDeleteLocation = async () => {
+    if (window.confirm("Are you sure you want to delete this location?")) {
+      try {
+        await deleteLocation(id);
+        navigate("/");
+      } catch (err) {
+        console.error(err);
+        setError("Unable to delete location.");
+      }
+    }
+  };
+
+  const handleDeleteItem = async (item) => {
+  if (window.confirm(`Are you sure you want to delete ${item.name}?`)) {
+    try {
+      await deleteItem(id, item.id);
+      setItems((prev) => prev.filter((i) => i.id !== item.id));
+    } catch (err) {
+      console.error(err);
+      setError("Unable to delete item.");
+    }
+  }
+};
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -57,7 +82,10 @@ function LocationDetailPage() {
 
     const fetchTags = async () => {
       try {
-        const [all, applied] = await Promise.all([getTags(), getTagsByLocation(id)]);
+        const [all, applied] = await Promise.all([
+          getTags(),
+          getTagsByLocation(id),
+        ]);
         setAllTags(all);
         setLocationTags(applied);
       } catch (err) {
@@ -126,7 +154,10 @@ function LocationDetailPage() {
     return <p className="status">Loading...</p>;
   }
 
-  const categories = ["All", ...new Set(items.map((i) => i.category).filter(Boolean))];
+  const categories = [
+    "All",
+    ...new Set(items.map((i) => i.category).filter(Boolean)),
+  ];
   const visibleItems =
     activeCategory === "All"
       ? items
@@ -139,11 +170,22 @@ function LocationDetailPage() {
         <Link to={`/locations/${id}/edit`} className="headerBtn">
           Edit
         </Link>
+        <button
+          type="button"
+          className="headerBtn"
+          onClick={handleDeleteLocation}
+        >
+          Delete
+        </button>{" "}
       </header>
 
       <section className="detail-hero">
         {location.image_url ? (
-          <img className="detail-hero__image" src={location.image_url} alt={location.name} />
+          <img
+            className="detail-hero__image"
+            src={location.image_url}
+            alt={location.name}
+          />
         ) : (
           <div className="detail-hero__image detail-hero__image--empty">🍰</div>
         )}
@@ -161,8 +203,12 @@ function LocationDetailPage() {
               "Not rated yet"
             )}
           </p>
-          {location.address && <p className="detail-hero__address">{location.address}</p>}
-          {location.notes && <p className="detail-hero__desc">{location.notes}</p>}
+          {location.address && (
+            <p className="detail-hero__address">{location.address}</p>
+          )}
+          {location.notes && (
+            <p className="detail-hero__desc">{location.notes}</p>
+          )}
         </div>
       </section>
 
@@ -287,7 +333,12 @@ function LocationDetailPage() {
 
       <div className="item-grid">
         {visibleItems.map((item) => (
-          <ItemCard key={item.id} item={item} onEdit={handleEditItem} />
+          <ItemCard
+            key={item.id}
+            item={item}
+            onEdit={handleEditItem}
+            onDelete={handleDeleteItem}
+          />
         ))}
       </div>
     </div>
