@@ -34,12 +34,18 @@ function App() {
           Slice of Life 🍰
         </Link>
 
+        <nav>
+          <Link to="/">Home</Link> |
+          <Link to="/locations/add">Add Location</Link>
+        </nav>
+        
         <div className="app-header__auth">
           <Avatar className="avatar" user={user} />
           <button className="headerBtn" onClick={logout}>
             Log Out
           </button>
         </div>
+
         
       </header>
 
