@@ -5,6 +5,7 @@ import {
   updateLocation,
   getLocationById,
 } from "../services/locationsApi";
+import { searchPlaces, getPlaceDetails } from "../services/placesApi";
 import "../css/LocationFormPage.css";
 
 function LocationFormPage() {
@@ -19,8 +20,14 @@ function LocationFormPage() {
     image_url: "",
     visited: false,
     rating: "",
+    place_id: "",
   });
   const [error, setError] = useState(null);
+
+  // Place autocomplete state (add mode only)
+  const [placeQuery, setPlaceQuery] = useState("");
+  const [predictions, setPredictions] = useState([]);
+  const [searching, setSearching] = useState(false);
 
   useEffect(() => {
     if (!isEditing) return;
@@ -36,6 +43,48 @@ function LocationFormPage() {
 
     fetchLocation();
   }, [id, isEditing]);
+
+  // Debounced place search waits ~0.8s after typing stops, then fetches predictions.
+  useEffect(() => {
+    const q = placeQuery.trim();
+    if (q.length < 3) {
+      setPredictions([]);
+      return;
+    }
+
+    setSearching(true);
+    const timer = setTimeout(async () => {
+      try {
+        const results = await searchPlaces(q);
+        setPredictions(results);
+      } catch (err) {
+        console.error(err);
+        setPredictions([]);
+      } finally {
+        setSearching(false);
+      }
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, [placeQuery]);
+
+  const handleSelectPlace = async (prediction) => {
+    setPredictions([]);
+    setPlaceQuery(prediction.main);
+    try {
+      const details = await getPlaceDetails(prediction.place_id);
+      setForm((prev) => ({
+        ...prev,
+        name: details.name || prev.name,
+        address: details.address || prev.address,
+        image_url: details.image_url || prev.image_url,
+        place_id: details.place_id,
+      }));
+    } catch (err) {
+      console.error(err);
+      setError("Could not load that place — you can still fill it in manually.");
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -71,6 +120,37 @@ function LocationFormPage() {
       {error && <p className="status status--error">{error}</p>}
       <div className="location-form-page">
         <h2>{isEditing ? "Edit Location" : "Add Location"}</h2>
+
+        {!isEditing && (
+          <div className="place-search">
+            <label htmlFor="place-search">Search for a place</label>
+            <input
+              id="place-search"
+              type="text"
+              placeholder="Start typing a bakery or restaurant name…"
+              value={placeQuery}
+              onChange={(e) => setPlaceQuery(e.target.value)}
+              autoComplete="off"
+            />
+            {searching && <p className="place-search__status">Searching…</p>}
+            {predictions.length > 0 && (
+              <ul className="place-search__list">
+                {predictions.map((p) => (
+                  <li key={p.place_id}>
+                    <button type="button" onClick={() => handleSelectPlace(p)}>
+                      <span className="place-search__main">{p.main}</span>
+                      <span className="place-search__secondary">{p.secondary}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <p className="place-search__hint">
+              Pick a result to auto-fill the fields, or just type them in yourself.
+            </p>
+          </div>
+        )}
+
         <form className="location-form" onSubmit={handleSubmit}>
           <div className="form-field">
             <label htmlFor="name">Name</label>

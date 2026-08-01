@@ -39,7 +39,7 @@ export const getLocationById = async (req, res) => {
 };
 
 export const createLocation = async (req, res) => {
-  const { name, address, notes, image_url, visited, rating } = req.body;
+  const { name, address, notes, image_url, visited, rating, place_id } = req.body;
 
   if (!name) {
     return res.status(400).json({ error: "Name is required." });
@@ -47,12 +47,16 @@ export const createLocation = async (req, res) => {
 
   try {
     const result = await pool.query(
-      `INSERT INTO locations (name, address, notes, image_url, visited, rating)
-                VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`,
-      [name, address, notes, image_url, visited, rating],
+      `INSERT INTO locations (name, address, notes, image_url, visited, rating, place_id)
+                VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`,
+      [name, address, notes, image_url, visited, rating, place_id],
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
+    // Unique violation on place_id, this exact place is already saved.
+    if (err.code === "23505") {
+      return res.status(409).json({ error: "This place is already saved." });
+    }
     console.error(err);
     res.status(500).json({ error: "Unable to create location." });
   }
@@ -60,7 +64,7 @@ export const createLocation = async (req, res) => {
 
 export const updateLocation = async (req, res) => {
   const { id } = req.params;
-  const fields = ["name", "address", "notes", "image_url", "visited", "rating"];
+  const fields = ["name", "address", "notes", "image_url", "visited", "rating", "place_id"];
 
   const updates = [];
   const values = [];

@@ -12,10 +12,99 @@
 
 .location-form {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   gap: 20px;
   border: 1px solid var(--border);
   border-radius: 12px;
   background: var(--bg);
   padding: 24px;
+}
+
+/* Place autocomplete (add mode) */
+.place-search {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.place-search label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-h);
+  margin-bottom: 6px;
+}
+
+.place-search > input {
+  font: inherit;
+  font-size: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  color: var(--text-h);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.place-search > input:focus {
+  outline: none;
+  border-color: var(--accent-border);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.place-search__status {
+  font-size: 13px;
+  color: var(--text);
+  margin: 6px 2px 0;
+}
+
+.place-search__hint {
+  font-size: 12px;
+  color: var(--text);
+  opacity: 0.8;
+  margin: 6px 2px 0;
+}
+
+.place-search__list {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 4px;
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.place-search__list button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 10px;
+  cursor: pointer;
+  color: inherit;
+}
+
+.place-search__list button:hover {
+  background: var(--code-bg);
+}
+
+.place-search__main {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+.place-search__secondary {
+  font-size: 13px;
+  color: var(--text);
 }
