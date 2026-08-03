@@ -2,7 +2,7 @@ import express from "express";
 import passport from "passport";
 
 const router = express.Router();
-const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
+const CLIENT_URL = process.env.CLIENT_URL;
 
 // login success - the frontend polls this on load to find out who (if anyone) is signed in
 router.get("/login/success", (req, res) => {
@@ -45,7 +45,7 @@ router.get(
   "/github/callback",
   passport.authenticate("github", {
     successRedirect: CLIENT_URL,
-    failureRedirect: "/auth/login/failed",
+    failureRedirect: CLIENT_URL+'/locations' ,
   }),
 );
 

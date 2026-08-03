@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { useRoutes, Link } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LocationFormPage from "./pages/LocationFormPage";
 import LocationDetailPage from "./pages/LocationDetailPage";
@@ -18,6 +18,15 @@ function App() {
       .catch(() => setUser(null))
       .finally(() => setLoading(false));
   }, []);
+
+  const element = useRoutes([
+    { 
+      path: "/", 
+      element: <HomePage /> },
+    { path: "/locations/add", element: <LocationFormPage /> },
+    { path: "/locations/:id/edit", element: <LocationFormPage /> },
+    { path: "/locations/:id", element: <LocationDetailPage /> },
+  ]);
 
   if (loading) {
     return <p className="status">Loading...</p>;
@@ -38,7 +47,7 @@ function App() {
           <Link to="/">Home</Link> |
           <Link to="/locations/add">Add Location</Link>
         </nav>
-        
+
         <div className="app-header__auth">
           <Avatar className="avatar" user={user} />
           <button className="headerBtn" onClick={logout}>
@@ -46,16 +55,11 @@ function App() {
           </button>
         </div>
 
-        
+
       </header>
 
       <main className="app-main">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/locations/add" element={<LocationFormPage />} />
-          <Route path="/locations/:id/edit" element={<LocationFormPage />} />
-          <Route path="/locations/:id" element={<LocationDetailPage />} />
-        </Routes>
+        {element}
       </main>
     </div>
   );

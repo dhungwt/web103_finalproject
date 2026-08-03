@@ -1,6 +1,6 @@
 // Shared settings for every *Api.js file in this folder.
 
-export const SERVER_URL = "http://localhost:3000";
+export const SERVER_URL = "https://server-fd88.onrender.com";
 
 export const BASE_URL = `${SERVER_URL}/api`;
 

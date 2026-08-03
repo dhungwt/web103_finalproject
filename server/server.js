@@ -17,7 +17,8 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
+const CLIENT_URL = process.env.CLIENT_URL;
+const SERVER_URL = process.env.SERVER_URL;
 
 
 app.use(
@@ -67,5 +68,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server listening on port http://localhost:${PORT}`);
+  console.log(`Server listening on port ${SERVER_URL}`);
 });
