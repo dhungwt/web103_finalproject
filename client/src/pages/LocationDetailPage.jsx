@@ -136,6 +136,7 @@ function LocationDetailPage() {
     <div className="detail-card">
       <header className="detail-card__header">
         <h1>{location.name}</h1>
+          <div className="header-actions">
         <Link to={`/locations/${id}/edit`} className="headerBtn">
           Edit
         </Link>
@@ -145,7 +146,8 @@ function LocationDetailPage() {
           onClick={handleDeleteLocation}
         >
           Delete
-        </button>{" "}
+        </button>
+        </div>
       </header>
 
       <section className="detail-hero">
