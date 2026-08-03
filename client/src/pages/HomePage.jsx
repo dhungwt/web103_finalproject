@@ -98,7 +98,7 @@ function HomePage() {
   return (
     <section>
       <div className="page-heading">
-        <h1>Your Bucket List</h1>
+        <h2>Your Bucket List</h2>
         <p>
           {filteredLocations.length} {filteredLocations.length === 1 ? "place" : "places"} saved
         </p>
