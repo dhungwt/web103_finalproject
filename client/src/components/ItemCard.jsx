@@ -1,3 +1,4 @@
+import ItemCard from "../css/ItemCard";
 function ItemCard({ item, onEdit, onDelete }) {
   const { name, rating, image_url } = item;
 
