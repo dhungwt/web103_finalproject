@@ -24,8 +24,9 @@
 }
 
 .app-logo {
-  font-size: 22px;
-  font-weight: 600;
+  font-family: 'Caveat', cursive;
+  font-size: 28px;
+  font-weight: 700;
   color: var(--text-h);
   text-decoration: none;
 }

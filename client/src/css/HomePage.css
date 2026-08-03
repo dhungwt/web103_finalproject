@@ -1,17 +1,31 @@
-.page-heading h1 {
+.page-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px; /
+}
+
+.page-heading h1,
+.page-heading h2 {
+  font-family: 'Caveat', cursive;
   font-size: 32px;
-  letter-spacing: -0.5px;
-  margin: 0 0 4px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin: 0; 
 }
 
 .page-heading p {
+  flex-basis: 100%;   
   font-size: 15px;
-  margin-bottom: 28px;
+  margin: -4px 0 0 0; 
 }
 
 .page-heading__add {
   display: inline-block;
-  margin-bottom: 28px;
+  margin-bottom: 0; 
+  flex-shrink: 0;   
 }
 
 .filter-bar {
