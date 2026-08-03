@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { getLocationById, deleteLocation } from "../services/locationsApi";
-import { getItemsByLocation, createItem, deleteItem } from "../services/itemsApi";
+import {
+  getItemsByLocation,
+  createItem,
+  deleteItem,
+  updateItem,
+} from "../services/itemsApi";
+import ItemFormModal from "../components/ItemFormModal";
 import { getTagsByLocation } from "../services/tagsApi";
 import ItemCard from "../components/ItemCard";
 import "../css/LocationDetailPage.css";
@@ -21,6 +27,7 @@ function LocationDetailPage() {
   const [items, setItems] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
   const [error, setError] = useState(null);
+  const [editingItem, setEditingItem] = useState(null);
 
   const [locationTags, setLocationTags] = useState([]);
 
@@ -41,16 +48,26 @@ function LocationDetailPage() {
   };
 
   const handleDeleteItem = async (item) => {
-  if (window.confirm(`Are you sure you want to delete ${item.name}?`)) {
+    if (window.confirm(`Are you sure you want to delete ${item.name}?`)) {
+      try {
+        await deleteItem(id, item.id);
+        setItems((prev) => prev.filter((i) => i.id !== item.id));
+      } catch (err) {
+        console.error(err);
+        setError("Unable to delete item.");
+      }
+    }
+  };
+
+  const fetchItems = async () => {
     try {
-      await deleteItem(id, item.id);
-      setItems((prev) => prev.filter((i) => i.id !== item.id));
+      const itemData = await getItemsByLocation(id);
+      setItems(itemData);
     } catch (err) {
       console.error(err);
-      setError("Unable to delete item.");
+      setError("Items not found.");
     }
-  }
-};
+  };
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -60,16 +77,6 @@ function LocationDetailPage() {
       } catch (err) {
         console.error(err);
         setError("Location not found.");
-      }
-    };
-
-    const fetchItems = async () => {
-      try {
-        const itemData = await getItemsByLocation(id);
-        setItems(itemData);
-      } catch (err) {
-        console.error(err);
-        setError("Items not found.");
       }
     };
 
@@ -112,7 +119,7 @@ function LocationDetailPage() {
   };
 
   const handleEditItem = (item) => {
-    console.warn("Item editing isn't wired to a page yet:", item);
+    setEditingItem(item);
   };
 
   if (error) {
@@ -136,17 +143,17 @@ function LocationDetailPage() {
     <div className="detail-card">
       <header className="detail-card__header">
         <h1>{location.name}</h1>
-          <div className="header-actions">
-        <Link to={`/locations/${id}/edit`} className="headerBtn">
-          Edit
-        </Link>
-        <button
-          type="button"
-          className="headerBtn"
-          onClick={handleDeleteLocation}
-        >
-          Delete
-        </button>
+        <div className="header-actions">
+          <Link to={`/locations/${id}/edit`} className="headerBtn">
+            Edit
+          </Link>
+          <button
+            type="button"
+            className="headerBtn"
+            onClick={handleDeleteLocation}
+          >
+            Delete
+          </button>
         </div>
       </header>
 
@@ -188,7 +195,10 @@ function LocationDetailPage() {
           <h2>Tags</h2>
           <div className="tags-container">
             {locationTags.map((tag) => (
-              <span key={tag.id} className="tag-chip tag-chip--active tag-chip--static">
+              <span
+                key={tag.id}
+                className="tag-chip tag-chip--active tag-chip--static"
+              >
                 {tag.name}
               </span>
             ))}
@@ -305,6 +315,18 @@ function LocationDetailPage() {
           />
         ))}
       </div>
+
+      {editingItem && (
+        <ItemFormModal
+          locationId={id}
+          item={editingItem}
+          onClose={() => setEditingItem(null)}
+          onSaved={() => {
+            setEditingItem(null);
+            fetchItems();
+          }}
+        />
+      )}
     </div>
   );
 }
