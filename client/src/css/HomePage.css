@@ -1,5 +1,3 @@
-/* HomePage + LocationCard */
-
 .page-heading h1 {
   font-size: 32px;
   letter-spacing: -0.5px;
@@ -88,35 +86,56 @@
 
 .location-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 32px;         
+  padding: 12px 0;   
 }
 
 .location-card {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--bg);
+  background: #fcf8ef;
+  padding: 12px 12px 24px 12px;
+  border: 1px solid #e3d7c5;
+  border-radius: 4px;
+  overflow: visible;  
+
+  /* --- Random slight rotation --- */
+  transform: rotate(var(--rot, 0deg));
+  transform-origin: center center;
+
+  /* --- Soft paper shadow --- */
+  box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.08), 
+              -2px -2px 8px rgba(0, 0, 0, 0.02);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  position: relative;   /* Needed for the tape element */
   text-decoration: none;
   color: inherit;
-  transition:
-    box-shadow 0.15s ease,
-    transform 0.15s ease;
+  display: flex;
+  flex-direction: column;
 }
 
+/* --- Random rotation values (one per card) --- */
+.location-card:nth-child(odd) { --rot: 1.5deg; }
+.location-card:nth-child(even) { --rot: -2deg; }
+.location-card:nth-child(3n) { --rot: 0.5deg; }
+.location-card:nth-child(5n) { --rot: -1.2deg; }
+
+/* --- Hover: straighten, lift, and pop --- */
 .location-card:hover {
-  box-shadow: var(--shadow);
-  transform: translateY(-2px);
+  transform: rotate(0deg) scale(1.02) translateY(-6px);
+  box-shadow: 8px 12px 24px rgba(0, 0, 0, 0.15);
+  z-index: 10;
 }
 
+/* --- printed polaroid photo styling for images --- */
 .location-card__image {
   width: 100%;
   height: 170px;
   object-fit: cover;
   display: block;
-  background: var(--code-bg);
+  border-radius: 2px;
+  border: 1px solid #d6cbbc;
+  background: #e8dfd1;
 }
 
 .location-card__image--empty {
@@ -124,12 +143,17 @@
   align-items: center;
   justify-content: center;
   font-size: 40px;
+  background: #e8dfd1;
+  border: 1px solid #d6cbbc;
+  border-radius: 2px;
 }
 
+/* --- Card body (text area) --- */
 .location-card__body {
-  padding: 16px;
+  padding: 12px 4px 0 4px;
 }
 
+/* --- Handwriting fonts for text --- */
 .location-card__heading {
   display: flex;
   align-items: flex-start;
@@ -139,20 +163,30 @@
 }
 
 .location-card__heading h2 {
-  font-size: 18px;
+  font-family: 'Caveat', 'Patrick Hand', cursive;
+  font-size: 24px;
+  font-weight: 700;
+  color: #2a241c;
   margin: 0;
+  letter-spacing: 0.5px;
 }
 
 .location-card__address {
-  font-size: 14px;
-  margin-bottom: 8px;
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  color: #4a4035;
+  margin-bottom: 6px;
 }
 
 .location-card__notes {
-  font-size: 14px;
-  line-height: 145%;
+  font-family: 'Caveat', cursive;
+  font-size: 15px;
+  color: #4a4035;
+  line-height: 140%;
+  opacity: 0.9;
 }
 
+/* --- post it tags--- */
 .location-card__tags {
   display: flex;
   flex-wrap: wrap;
@@ -161,5 +195,51 @@
 }
 
 .location-card__tags .tag-chip {
+  font-family: 'Caveat', cursive;
+  font-size: 13px;
+  background: #f3eee6;
+  border: 1px dashed #b8aa98;
+  border-radius: 2px;     
+  padding: 2px 10px;
+  color: #3d352b;
   cursor: default;
+}
+
+/* =========================================== */
+/* =============== WASHI TAPE ================ */
+/* =========================================== */
+
+/* Default pink tape */
+.location-card::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+  width: 55px;
+  height: 22px;
+  background: rgba(255, 215, 200, 0.75);
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  z-index: 5;
+  pointer-events: none; /* So clicks still work on the card */
+}
+
+/* Alternate tape colors */
+.location-card:nth-child(2n)::before { 
+  background: rgba(200, 225, 255, 0.8); /* Blue tape */
+  transform: translateX(-50%) rotate(4deg);
+  width: 40px;
+}
+
+.location-card:nth-child(3n)::before { 
+  background: rgba(255, 255, 200, 0.85); /* Yellow tape */
+  transform: translateX(-50%) rotate(-5deg);
+  width: 65px;
+}
+
+.location-card:nth-child(5n)::before { 
+  background: rgba(200, 255, 215, 0.7); /* Mint tape */
+  transform: translateX(-50%) rotate(2deg);
+  width: 45px;
 }

@@ -1,4 +1,5 @@
 /* App shell + styles shared by more than one page. */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&display=swap');
 
 #root {
   text-align: left;
