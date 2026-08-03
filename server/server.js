@@ -33,7 +33,13 @@ app.use(express.json());
 app.use(session({
     secret: 'codepath',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: false,
+    proxy: true,
+    cookie: {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    },
 }))
 
 // setup and initialize passport
