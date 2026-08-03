@@ -28,6 +28,7 @@
   font-weight: 900;
   color: var(--text-h);
   text-decoration: none;
+   -webkit-text-stroke: 0.5px currentColor;
 }
 
 .app-header__auth {
