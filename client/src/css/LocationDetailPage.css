@@ -176,7 +176,9 @@
   border-radius: 12px;
   overflow: hidden;
   background: var(--bg);
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  transition:
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
 }
 
 .item-card:hover {
@@ -206,10 +208,7 @@
   font-size: 34px;
 }
 
-.item-card__edit {
-  position: absolute;
-  top: 8px;
-  right: 8px;
+.item-card__action {
   font-size: 12px;
   padding: 4px 10px;
   border-radius: 999px;
@@ -221,9 +220,9 @@
   transition: opacity 0.15s ease;
 }
 
-/* Reveal the edit button only when the card is hovered or the button is focused */
-.item-card:hover .item-card__edit,
-.item-card__edit:focus-visible {
+/* Reveal the edit and delete button only when the card is hovered or the button is focused */
+.item-card:hover .item-card__action,
+.item-card__action:focus-visible {
   opacity: 1;
 }
 

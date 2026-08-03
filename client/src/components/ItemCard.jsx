@@ -12,16 +12,16 @@ function ItemCard({ item, onEdit, onDelete }) {
         {onEdit && (
           <button
             type="button"
-            className="item-card__edit"
+            className="item-card__action"
             onClick={() => onEdit(item)}
           >
             Edit
           </button>
         )}
-                {onDelete && (
+        {onDelete && (
           <button
             type="button"
-            className="item-card__edit"
+            className="item-card__action"
             onClick={() => onDelete(item)}
           >
             Delete
@@ -31,7 +31,9 @@ function ItemCard({ item, onEdit, onDelete }) {
 
       <div className="item-card__footer">
         <span className="item-card__name">{name}</span>
-        {rating != null && <span className="item-card__rating">★ {rating}</span>}
+        {rating != null && (
+          <span className="item-card__rating">★ {rating}</span>
+        )}
       </div>
     </div>
   );
