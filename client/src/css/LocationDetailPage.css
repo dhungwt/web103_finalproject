@@ -208,6 +208,14 @@
   font-size: 34px;
 }
 
+.item-card__actions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 6px;
+}
+
 .item-card__action {
   font-size: 12px;
   padding: 4px 10px;
@@ -226,7 +234,7 @@
   opacity: 1;
 }
 
-.item-card__edit:hover {
+.item-card__action:hover {
   border-color: var(--accent-border);
 }
 

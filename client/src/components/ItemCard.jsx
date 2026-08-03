@@ -9,24 +9,26 @@ function ItemCard({ item, onEdit, onDelete }) {
         ) : (
           <div className="item-card__placeholder">🍰</div>
         )}
-        {onEdit && (
-          <button
-            type="button"
-            className="item-card__action"
-            onClick={() => onEdit(item)}
-          >
-            Edit
-          </button>
-        )}
-        {onDelete && (
-          <button
-            type="button"
-            className="item-card__action"
-            onClick={() => onDelete(item)}
-          >
-            Delete
-          </button>
-        )}
+        <div className="item-card__actions">
+          {onEdit && (
+            <button
+              type="button"
+              className="item-card__action"
+              onClick={() => onEdit(item)}
+            >
+              Edit
+            </button>
+          )}
+          {onDelete && (
+            <button
+              type="button"
+              className="item-card__action"
+              onClick={() => onDelete(item)}
+            >
+              Delete
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="item-card__footer">
