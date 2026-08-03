@@ -38,7 +38,7 @@ function App() {
     <div className="app">
       <header className="app-header">
         <Link to="/" className="app-logo">
-          Slice of Life 🍰
+          <h1>Slice of Life 🍰</h1>
         </Link>
 
         <div className="app-header__auth">
@@ -47,12 +47,9 @@ function App() {
             Log Out
           </button>
         </div>
-
       </header>
 
-      <main className="app-main">
-        {element}
-      </main>
+      <main className="app-main">{element}</main>
     </div>
   );
 }
