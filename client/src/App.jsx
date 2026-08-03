@@ -53,7 +53,6 @@ function App() {
           </button>
         </div>
 
-
       </header>
 
       <main className="app-main">
