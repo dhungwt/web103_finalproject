@@ -21,7 +21,7 @@ function ItemCard({ item, onEdit, onDelete }) {
                 {onDelete && (
           <button
             type="button"
-            className="item-card__delete"
+            className="item-card__edit"
             onClick={() => onDelete(item)}
           >
             Delete
