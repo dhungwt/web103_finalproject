@@ -29,6 +29,8 @@ Backend:
 ### [View all locations in bucket list]
 
 ✅ User will be able to view all the places on their bucket list on the home page
+<img width="735" height="478" alt="bucket_list" src="https://github.com/user-attachments/assets/a7da3c3b-821e-43ef-9d93-26e2016cb245" />
+
 
 ### [Add a place in bucket list]
 
@@ -75,11 +77,11 @@ User will be able to edit details of  individual food and drink served at the ca
 
 Users will be able to edit menu items in a modal while the location’s details are still visible on screen
 
-### [Google maps direction integration]
+### [Location Autofill using Google Places]
 
-We will add a Google Maps integration to direct users to direct them to the place
+✅ Users will be able to autofill a location when adding a location.
 
-[gif goes here]
+<img width="970" height="631" alt="add_food" src="https://github.com/user-attachments/assets/0434b087-d875-4eff-b041-c5c494bfc236" />
 
 
 ## Installation Instructions
