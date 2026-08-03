@@ -13,7 +13,7 @@ This unit, be sure to complete all tasks listed below. To complete a task, place
   - [ ] Under each feature you have completed, **include a GIF** showing feature functionality
 - [x] In this document, complete the **Reflection** section below
 - [x] 🚩🚩🚩**Complete the Final Project Feature Checklist section below**, detailing each feature you completed in the project (ONLY include features you implemented, not features you planned)
-- [ ] 🚩🚩🚩**Record a GIF showing a complete run-through of your app** that displays all the components included in the **Final Project Feature Checklist** below
+- [x] 🚩🚩🚩**Record a GIF showing a complete run-through of your app** that displays all the components included in the **Final Project Feature Checklist** below
   - [ ] Include this GIF in the **Final Demo GIF** section below
 
 ## Final Project Feature Checklist
@@ -58,8 +58,10 @@ Complete the checklist below detailing each baseline, custom, and stretch featur
 - [x] The project includes a custom non-RESTful route with corresponding controller actions
 - [x] The user can filter or sort items based on particular criteria as appropriate for your use case
 - [x] Data is automatically generated in response to a certain event or user action. Examples include generating a default inventory for a new user starting a game or creating a starter set of tasks for a user creating a new task app account
-- [ x Data submitted via a POST or PATCH request is validated before the database is updated (e.g. validating that an event is in the future before allowing a new event to be created)
+- [x] Data submitted via a POST or PATCH request is validated before the database is updated (e.g. validating that an event is in the future before allowing a new event to be created)
   - [x] *To receive full credit, please be sure to demonstrate in your walkthrough that for certain inputs, the item will NOT be successfully created or updated.*
+        <img width="2042" height="1428" alt="Kapture 2026-08-02 at 23 59 50" src="https://github.com/user-attachments/assets/b50a7ebe-5301-48b6-8ac7-c41052618126" />
+
 
 ### Stretch Features
 
@@ -72,7 +74,7 @@ Complete the checklist below detailing each baseline, custom, and stretch featur
 - [ ] Disable buttons and inputs during the form submission process
 - [ ] Disable buttons after they have been clicked
   - *At least 75% of buttons in your app must exhibit this behavior to receive full credit*
-- [ ] Users can upload images to the app and have them be stored on a cloud service
+- [] Users can upload images to the app and have them be stored on a cloud service
   - *A user profile picture does **NOT** count for this rubric item **only if** the app also includes "Login via GitHub" functionality.*
   - *Adding a photo via a URL does **NOT** count for this rubric item (for example, if the user provides a URL with an image to attach it to the post).*
   - *Selecting a photo from a list of provided photos does **NOT** count for this rubric item.*
@@ -80,7 +82,7 @@ Complete the checklist below detailing each baseline, custom, and stretch featur
 
 ## Final Demo GIF
 
-🔗 [Here's a GIF walkthrough of the final project](👉🏾👉🏾👉🏾 your link here)
+<img width="854" height="480" alt="KtvDiF9 - Imgur" src="https://github.com/user-attachments/assets/f7e83bb2-d6cb-4e56-a2e4-0b2a2a5a08ec" />
 
 ## Reflection
 
