@@ -4,7 +4,7 @@ CodePath WEB103 Final Project
 
 Designed and developed by: Diana Hung, Don Destin Iriho, Sayyid Sannoh, Sarah To, and Tyler Trinh
 
-🔗 Link to deployed app:
+🔗 Link to deployed app: https://client-8ksx.onrender.com/
 
 ## About
 
@@ -40,11 +40,11 @@ Backend:
 
 ### [Delete a place in bucket list]
 
-User will be able to remove a location from their bucket list.
+✅ User will be able to remove a location from their bucket list.
 
 ### [Add a food item to a location]
 
-User will be able to add individual food and drink served at the cafe or bakery. They will be able to add details of each item such as a rating, photos and category tags.
+✅ User will be able to add individual food and drink served at the cafe or bakery. They will be able to add details of each item such as a rating, photos and category tags.
 
 [gif goes here]
 
@@ -56,7 +56,7 @@ User will be able to edit details of  individual food and drink served at the ca
 
 ### [Delete a food item at a location]
 
-User will be able to remove  individual food and drink served at the cafe or bakery.
+✅ User will be able to remove  individual food and drink served at the cafe or bakery.
 
 [gif goes here]
 
@@ -65,11 +65,11 @@ User will be able to remove  individual food and drink served at the cafe or bak
 
 ### [User login via GitHub]
 
-User will be able to authenticate and use curate their own data
+✅ User will be able to authenticate and use curate their own data
 
 ### [Filter locations by tag]
 
-User will be able to filter locations to “Visited”, “Not Visited”, “Gluten-Free”, “Good for kids”, etc
+✅ User will be able to filter locations to “Visited”, “Not Visited”, “Gluten-Free”, “Good for kids”, etc
 
 ### [Edit menu items in a modal]
 
