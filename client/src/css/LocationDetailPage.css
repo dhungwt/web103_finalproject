@@ -93,6 +93,11 @@
   gap: 8px;
 }
 
+/* Read-only tag chips on the detail page — display only, no interaction. */
+.tag-chip--static {
+  cursor: default;
+}
+
 /* Items bar: heading + category filters, with a divider underneath */
 .items-bar {
   display: flex;

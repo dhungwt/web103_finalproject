@@ -1,4 +1,4 @@
-function ItemCard({ item, onEdit }) {
+function ItemCard({ item, onEdit, onDelete }) {
   const { name, rating, image_url } = item;
 
   return (
@@ -16,6 +16,15 @@ function ItemCard({ item, onEdit }) {
             onClick={() => onEdit(item)}
           >
             Edit
+          </button>
+        )}
+                {onDelete && (
+          <button
+            type="button"
+            className="item-card__delete"
+            onClick={() => onDelete(item)}
+          >
+            Delete
           </button>
         )}
       </div>

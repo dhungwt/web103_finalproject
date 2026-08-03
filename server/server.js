@@ -5,6 +5,7 @@ import locationsRoutes from "./routes/routesLocations.js";
 import tagsRoutes from "./routes/routesTags.js";
 import usersRoutes from "./routes/routesUsers.js";
 import authRoutes from "./routes/auth.js";
+import placesRoutes from "./routes/routesPlaces.js";
 
 // session set up for passport
 import passport from "passport";
@@ -58,6 +59,7 @@ passport.deserializeUser(async (id, done) => {
 app.use("/api/locations", locationsRoutes);
 app.use("/api/tags", tagsRoutes);
 app.use("/api/users", usersRoutes);
+app.use("/api/places", placesRoutes);
 app.use("/auth", authRoutes);
 
 app.get("/", (req, res) => {
