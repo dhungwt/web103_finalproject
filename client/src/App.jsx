@@ -20,9 +20,7 @@ function App() {
   }, []);
 
   const element = useRoutes([
-    { 
-      path: "/", 
-      element: <HomePage /> },
+    { path: "/", element: <HomePage /> },
     { path: "/locations/add", element: <LocationFormPage /> },
     { path: "/locations/:id/edit", element: <LocationFormPage /> },
     { path: "/locations/:id", element: <LocationDetailPage /> },
