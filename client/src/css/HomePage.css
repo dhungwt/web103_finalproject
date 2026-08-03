@@ -17,12 +17,14 @@
 }
 
 .page-heading p {
+   order: 2; 
   flex-basis: 100%;   
   font-size: 15px;
   margin: -4px 0 0 0; 
 }
 
 .page-heading__add {
+  order: 1;  
   display: inline-block;
   margin-bottom: 0; 
   flex-shrink: 0;   
