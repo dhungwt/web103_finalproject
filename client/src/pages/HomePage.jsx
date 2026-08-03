@@ -100,9 +100,10 @@ function HomePage() {
       <div className="page-heading">
         <h2>Your Bucket List</h2>
         <p>
-          {filteredLocations.length} {filteredLocations.length === 1 ? "place" : "places"} saved
+          {filteredLocations.length}{" "}
+          {filteredLocations.length === 1 ? "place" : "places"} saved
         </p>
-        <Link to="/locations/add" className="headerBtn page-heading__add">
+        <Link to="/locations/add" className="page-heading__add headerBtn">
           + Add Location
         </Link>
       </div>
@@ -120,9 +121,7 @@ function HomePage() {
           <button
             type="button"
             className={
-              activeFilterCount > 0
-                ? "tag-chip tag-chip--active"
-                : "tag-chip"
+              activeFilterCount > 0 ? "tag-chip tag-chip--active" : "tag-chip"
             }
             onClick={toggleFilterMenu}
           >
