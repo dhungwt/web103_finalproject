@@ -172,29 +172,47 @@
 .item-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-  gap: 16px;
+  gap: 32px;          
+  padding: 12px 0;    
 }
 
 /* Item card */
 .item-card {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
+  background: #fcf8ef;
+  padding: 8px 8px 16px 8px;  /* Polaroid-style padding */
+  border: 1px solid #e3d7c5;
+  border-radius: 4px;
+  overflow: visible;          /* So tape can stick out */
+  
+  transform: rotate(var(--rot, 0deg));
+  transform-origin: center center;
+  
+  box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.08), 
+              -2px -2px 8px rgba(0, 0, 0, 0.02);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  
+  position: relative;
   background: var(--bg);
-  transition:
-    box-shadow 0.15s ease,
-    transform 0.15s ease;
 }
 
+.item-card:nth-child(odd) { --rot: 1.5deg; }
+.item-card:nth-child(even) { --rot: -2deg; }
+.item-card:nth-child(3n) { --rot: 0.5deg; }
+.item-card:nth-child(5n) { --rot: -1.2deg; }
+
 .item-card:hover {
-  box-shadow: var(--shadow);
-  transform: translateY(-2px);
+  transform: rotate(0deg) scale(1.02) translateY(-6px);
+  box-shadow: 8px 12px 24px rgba(0, 0, 0, 0.15);
+  z-index: 10;
 }
 
 .item-card__media {
   position: relative;
   height: 120px;
-  background: var(--code-bg);
+  border-radius: 2px;
+  border: 1px solid #d6cbbc;
+  overflow: hidden;           
+  background: #e8dfd1;
 }
 
 .item-card__media img {
@@ -211,6 +229,7 @@
   align-items: center;
   justify-content: center;
   font-size: 34px;
+  background: #e8dfd1; 
 }
 
 .item-card__actions {
@@ -222,7 +241,7 @@
 }
 
 .item-card__action {
-  font-size: 12px;
+ font-size: 12px;
   padding: 4px 10px;
   border-radius: 999px;
   border: 1px solid var(--border);
@@ -248,17 +267,55 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: 12px 14px;
+  padding: 10px 4px 0 4px; 
 }
 
 .item-card__name {
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--text-h);
+ font-family: 'Caveat', cursive;
+  font-size: 20px;
+  font-weight: 700;
+  color: #2a241c;
+  margin: 0;
 }
 
 .item-card__rating {
-  font-size: 13px;
-  color: var(--text);
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  color: #4a4035;
   white-space: nowrap;
+}
+
+/* WASHI TAPE */
+.item-card::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+  width: 55px;
+  height: 22px;
+  background: rgba(255, 215, 200, 0.75);
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Alternate tape colors */
+.item-card:nth-child(2n)::before { 
+  background: rgba(200, 225, 255, 0.8);
+  transform: translateX(-50%) rotate(4deg);
+  width: 40px;
+}
+
+.item-card:nth-child(3n)::before { 
+  background: rgba(255, 255, 200, 0.85);
+  transform: translateX(-50%) rotate(-5deg);
+  width: 65px;
+}
+
+.item-card:nth-child(5n)::before { 
+  background: rgba(200, 255, 215, 0.7);
+  transform: translateX(-50%) rotate(2deg);
+  width: 45px;
 }
