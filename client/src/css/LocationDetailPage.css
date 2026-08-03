@@ -1,6 +1,6 @@
 /* Location detail — restaurant card view */
 
-.detail-card {
+.detail-card .item-card {
   border: 1px solid var(--border);
   border-radius: 16px;
   background: var(--bg);
@@ -8,7 +8,7 @@
   box-shadow: var(--shadow);
 }
 
-.detail-card__header {
+.detail-card .item-card__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -16,7 +16,7 @@
   margin-bottom: 20px;
 }
 
-.detail-card__header h1 {
+.detail-card .item-card__header h1 {
   font-size: 28px;
   letter-spacing: -0.5px;
   margin: 0;
@@ -195,18 +195,18 @@
   background: var(--bg);
 }
 
-.item-card:nth-child(odd) { --rot: 1.5deg; }
-.item-card:nth-child(even) { --rot: -2deg; }
-.item-card:nth-child(3n) { --rot: 0.5deg; }
-.item-card:nth-child(5n) { --rot: -1.2deg; }
+.detail-card  .item-card:nth-child(odd) { --rot: 1.5deg; }
+.detail-card  .item-card:nth-child(even) { --rot: -2deg; }
+.detail-card  .item-card:nth-child(3n) { --rot: 0.5deg; }
+.detail-card  .item-card:nth-child(5n) { --rot: -1.2deg; }
 
-.item-card:hover {
+.detail-card .item-card:hover {
   transform: rotate(0deg) scale(1.02) translateY(-6px);
   box-shadow: 8px 12px 24px rgba(0, 0, 0, 0.15);
   z-index: 10;
 }
 
-.item-card__media {
+.detail-card .item-card__media {
   position: relative;
   height: 120px;
   border-radius: 2px;
@@ -215,14 +215,14 @@
   background: #e8dfd1;
 }
 
-.item-card__media img {
+.detail-card .item-card__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.item-card__placeholder {
+.detail-card .item-card__placeholder {
   width: 100%;
   height: 100%;
   display: flex;
@@ -232,7 +232,7 @@
   background: #e8dfd1; 
 }
 
-.item-card__actions {
+.detail-card .item-card__actions {
   position: absolute;
   top: 8px;
   right: 8px;
@@ -240,7 +240,7 @@
   gap: 6px;
 }
 
-.item-card__action {
+.detail-card .item-card__action {
  font-size: 12px;
   padding: 4px 10px;
   border-radius: 999px;
@@ -253,16 +253,16 @@
 }
 
 /* Reveal the edit and delete button only when the card is hovered or the button is focused */
-.item-card:hover .item-card__action,
-.item-card__action:focus-visible {
+.detail-card .item-card:hover .item-card__action,
+.detail-card .item-card__action:focus-visible {
   opacity: 1;
 }
 
-.item-card__action:hover {
+.detail-card .item-card__action:hover {
   border-color: var(--accent-border);
 }
 
-.item-card__footer {
+.detail-card .item-card__footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -270,7 +270,7 @@
   padding: 10px 4px 0 4px; 
 }
 
-.item-card__name {
+.detail-card .item-card__name {
  font-family: 'Caveat', cursive;
   font-size: 20px;
   font-weight: 700;
@@ -278,7 +278,7 @@
   margin: 0;
 }
 
-.item-card__rating {
+.detail-card .item-card__rating {
   font-family: 'Caveat', cursive;
   font-size: 16px;
   color: #4a4035;
@@ -286,7 +286,7 @@
 }
 
 /* WASHI TAPE */
-.item-card::before {
+.detail-card .item-card::before {
   content: '';
   position: absolute;
   top: -8px;
@@ -302,19 +302,19 @@
 }
 
 /* Alternate tape colors */
-.item-card:nth-child(2n)::before { 
+.detail-card .item-card:nth-child(2n)::before { 
   background: rgba(200, 225, 255, 0.8);
   transform: translateX(-50%) rotate(4deg);
   width: 40px;
 }
 
-.item-card:nth-child(3n)::before { 
+.detail-card .item-card:nth-child(3n)::before { 
   background: rgba(255, 255, 200, 0.85);
   transform: translateX(-50%) rotate(-5deg);
   width: 65px;
 }
 
-.item-card:nth-child(5n)::before { 
+.detail-card .item-card:nth-child(5n)::before { 
   background: rgba(200, 255, 215, 0.7);
   transform: translateX(-50%) rotate(2deg);
   width: 45px;
