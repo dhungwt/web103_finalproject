@@ -9,7 +9,6 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "npx http-server ./dist"
-
   },
   "dependencies": {
     "react": "^19.2.7",
